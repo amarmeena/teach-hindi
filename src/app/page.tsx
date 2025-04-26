@@ -93,11 +93,17 @@ export default function Home() {
 
       {/* Mobile Sidebar Toggle */}
       <button
-        className="md:hidden fixed top-4 left-4 z-20 bg-blue-600 text-white rounded-full p-2 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="md:hidden fixed top-4 left-4 z-20 rounded-full p-2 flex items-center justify-center shadow-lg border border-blue-400 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 active:scale-95 transition-transform bg-blue-600 text-white dark:bg-white dark:text-blue-600"
+        style={{ minWidth: 40, minHeight: 40, width: 40, height: 40 }}
         onClick={() => setSidebarOpen((open) => !open)}
-        aria-label="Toggle progress sidebar"
+        aria-label="Open course progress sidebar"
       >
-        ☰
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+        <span className="sr-only">Open course progress sidebar</span>
       </button>
       {/* Mobile Sidebar */}
       {sidebarOpen && (
