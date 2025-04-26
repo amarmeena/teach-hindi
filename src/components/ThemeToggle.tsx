@@ -32,31 +32,18 @@ export default function ThemeToggle() {
     <button
       aria-label="Toggle theme"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      style={{
-        position: "fixed",
-        top: 18,
-        right: 24,
-        zIndex: 100,
-        background: theme === "dark" ? "#fff" : "#23272f",
-        border: theme === "dark" ? "1.5px solid #6366f1" : "1.5px solid #e5e7eb",
-        borderRadius: "50%",
-        width: 40,
-        height: 40,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.10)",
-        cursor: "pointer",
-        transition: "background 0.2s, border 0.2s",
-        padding: 0
-      }}
+      className={
+        `fixed top-4 right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center shadow-lg border border-blue-400 dark:border-gray-700
+        focus:outline-none focus:ring-2 focus:ring-blue-400 active:scale-95 transition-transform
+        bg-blue-600 text-white dark:bg-[#23272f] dark:text-blue-400 hover:bg-blue-700 dark:hover:bg-blue-900`
+      }
     >
       {theme === "dark" ? (
         // Filled sun icon
         <svg width="22" height="22" viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><g stroke="#fbbf24"><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="16.95" y1="7.05" x2="18.36" y2="5.64"/><line x1="7.05" y1="16.95" x2="5.64" y2="18.36"/><line x1="16.95" y1="16.95" x2="18.36" y2="18.36"/><line x1="7.05" y1="7.05" x2="5.64" y2="5.64"/></g></svg>
       ) : (
-        // Filled moon icon
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="#6366f1" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/></svg>
+        // Filled moon icon (white for contrast)
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/></svg>
       )}
     </button>
   );

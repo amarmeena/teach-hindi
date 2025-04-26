@@ -93,8 +93,7 @@ export default function Home() {
 
       {/* Mobile Sidebar Toggle */}
       <button
-        className="md:hidden fixed top-4 left-4 z-20 rounded-full p-2 flex items-center justify-center shadow-lg border border-blue-400 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 active:scale-95 transition-transform bg-blue-600 text-white dark:bg-white dark:text-blue-600"
-        style={{ minWidth: 40, minHeight: 40, width: 40, height: 40 }}
+        className="md:hidden fixed top-4 left-4 z-20 w-10 h-10 rounded-full flex items-center justify-center shadow-lg border border-blue-400 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 active:scale-95 transition-transform bg-blue-600 text-white dark:bg-[#23272f] dark:text-blue-400 hover:bg-blue-700 dark:hover:bg-blue-900"
         onClick={() => setSidebarOpen((open) => !open)}
         aria-label="Open course progress sidebar"
       >
