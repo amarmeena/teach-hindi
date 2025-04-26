@@ -1,0 +1,219 @@
+{
+  "lessons": [
+    "Basic Greetings",
+    "Introducing Yourself",
+    "Numbers & Counting",
+    "Everyday Conversation",
+    "Travel & Directions",
+    "Shopping & Money",
+    "Food & Dining",
+    "Emergencies & Health",
+    "Making Plans & Appointments",
+    "Social & Digital Communication",
+    "Work & Business Basics",
+    "Culture, Idioms & Slang",
+    "Expressing Opinions & Debate",
+    "Storytelling & Narration",
+    "Formal & Professional Communication"
+  ],
+  "courseContent": [
+    {
+      "vocabulary": [
+        ["Namaste", "Hello"],
+        ["Shukriya", "Thank you"],
+        ["Aap kaise hain?", "How are you?"],
+        ["Main theek hoon", "I'm fine"],
+        ["Kya haal hai?", "How are things?"],
+        ["Milke accha laga", "Nice to meet you"]
+      ],
+      "practice": [
+        { "prompt": "Translate to Hindi (Latin script):", "question": "How are you?", "answer": "Aap kaise hain?" },
+        { "prompt": "Translate to English:", "question": "Shukriya", "answer": "Thank you" }
+      ]
+    },
+    {
+      "vocabulary": [
+        ["Mera naam Ravi hai", "My name is Ravi"],
+        ["Aapka naam kya hai?", "What is your name?"],
+        ["Main student hoon", "I am a student"],
+        ["Aap kahan se hain?", "Where are you from?"],
+        ["Main Dilli se hoon", "I am from Delhi"]
+      ],
+      "practice": [
+        { "prompt": "Translate to Hindi (Latin script):", "question": "What is your name?", "answer": "Aapka naam kya hai?" },
+        { "prompt": "Translate to English:", "question": "Main Dilli se hoon", "answer": "I am from Delhi" }
+      ]
+    },
+    {
+      "vocabulary": [
+        ["Ek", "One"],
+        ["Do", "Two"],
+        ["Teen", "Three"],
+        ["Das", "Ten"],
+        ["Sau", "Hundred"],
+        ["Hazaar", "Thousand"]
+      ],
+      "practice": [
+        { "prompt": "Translate to Hindi (Latin script):", "question": "Three", "answer": "Teen" },
+        { "prompt": "Translate to English:", "question": "Hazaar", "answer": "Thousand" }
+      ]
+    },
+    {
+      "vocabulary": [
+        ["Aap kya kar rahe hain?", "What are you doing?"],
+        ["Sab theek hai", "Everything is fine"],
+        ["Thoda busy hoon", "I am a bit busy"],
+        ["Phir milenge", "See you again"],
+        ["Koi baat nahi", "No problem"]
+      ],
+      "practice": [
+        { "prompt": "Translate to Hindi (Latin script):", "question": "What are you doing?", "answer": "Aap kya kar rahe hain?" },
+        { "prompt": "Translate to English:", "question": "Koi baat nahi", "answer": "No problem" }
+      ]
+    },
+    {
+      "vocabulary": [
+        ["Yeh kahan hai?", "Where is this?"],
+        ["Seedha jaiye", "Go straight"],
+        ["Daiyen mud jaiye", "Turn right"],
+        ["Baayen mud jaiye", "Turn left"],
+        ["Kitni door hai?", "How far is it?"],
+        ["Auto milega?", "Will I get an auto?"]
+      ],
+      "practice": [
+        { "prompt": "Translate to Hindi (Latin script):", "question": "Turn right", "answer": "Daiyen mud jaiye" },
+        { "prompt": "Translate to English:", "question": "Yeh kahan hai?", "answer": "Where is this?" }
+      ]
+    },
+    {
+      "vocabulary": [
+        ["Yeh kitne ka hai?", "How much is this?"],
+        ["Sasta hai kya?", "Is it cheap?"],
+        ["Mujhe yeh chahiye", "I want this"],
+        ["Badla hai?", "Do you have change?"],
+        ["Card chalega?", "Will card work?"]
+      ],
+      "practice": [
+        { "prompt": "Translate to Hindi (Latin script):", "question": "How much is this?", "answer": "Yeh kitne ka hai?" },
+        { "prompt": "Translate to English:", "question": "Card chalega?", "answer": "Will card work?" }
+      ]
+    },
+    {
+      "vocabulary": [
+        ["Khaana", "Food"],
+        ["Paani", "Water"],
+        ["Menu dikhaiye", "Show me the menu"],
+        ["Bill le aaiye", "Bring the bill"],
+        ["Zyada teekha mat banaaiye", "Don't make it too spicy"]
+      ],
+      "practice": [
+        { "prompt": "Translate to Hindi (Latin script):", "question": "Show me the menu", "answer": "Menu dikhaiye" },
+        { "prompt": "Translate to English:", "question": "Bill le aaiye", "answer": "Bring the bill" }
+      ]
+    },
+    {
+      "vocabulary": [
+        ["Madad kijiye!", "Help!"],
+        ["Doctor bulaaiye", "Call a doctor"],
+        ["Mujhe chot lag gayi hai", "I am hurt"],
+        ["Dawai kahan milegi?", "Where can I get medicine?"],
+        ["Ambulance bulaaiye", "Call an ambulance"]
+      ],
+      "practice": [
+        { "prompt": "Translate to Hindi (Latin script):", "question": "Help!", "answer": "Madad kijiye!" },
+        { "prompt": "Translate to English:", "question": "Doctor bulaaiye", "answer": "Call a doctor" }
+      ]
+    },
+    {
+      "vocabulary": [
+        ["Kal mil sakte hain?", "Can we meet tomorrow?"],
+        ["Kitne baje?", "What time?"],
+        ["Mujhe der ho rahi hai", "I am getting late"],
+        ["Aap free hain?", "Are you free?"],
+        ["Aap kal free hain?", "Are you free tomorrow?"]
+      ],
+      "practice": [
+        { "prompt": "Translate to Hindi (Latin script):", "question": "Are you free?", "answer": "Aap free hain?" },
+        { "prompt": "Translate to English:", "question": "Mujhe der ho rahi hai", "answer": "I am getting late" }
+      ]
+    },
+    {
+      "vocabulary": [
+        ["Message bhejiye", "Send a message"],
+        ["Call kijiye", "Call me"],
+        ["Photo bhejiye", "Send a photo"],
+        ["Aap online hain?", "Are you online?"],
+        ["Reply kijiye", "Reply"]
+      ],
+      "practice": [
+        { "prompt": "Translate to Hindi (Latin script):", "question": "Send a message", "answer": "Message bhejiye" },
+        { "prompt": "Translate to English:", "question": "Aap online hain?", "answer": "Are you online?" }
+      ]
+    },
+    {
+      "vocabulary": [
+        ["Meeting kab hai?", "When is the meeting?"],
+        ["Kaam ho gaya?", "Is the work done?"],
+        ["Email bhejiye", "Send an email"],
+        ["Presentation deni hai", "I have to give a presentation"],
+        ["Client se baat hui?", "Did you talk to the client?"]
+      ],
+      "practice": [
+        { "prompt": "Translate to Hindi (Latin script):", "question": "Send an email", "answer": "Email bhejiye" },
+        { "prompt": "Translate to English:", "question": "Kaam ho gaya?", "answer": "Is the work done?" }
+      ]
+    },
+    {
+      "vocabulary": [
+        ["Bahut accha", "Very good"],
+        ["Chaliye", "Let's go"],
+        ["Bakwas mat kijiye", "Don't talk nonsense"],
+        ["Jugad", "Workaround"],
+        ["Sab mast hai", "Everything is great"]
+      ],
+      "practice": [
+        { "prompt": "Translate to Hindi (Latin script):", "question": "Very good", "answer": "Bahut accha" },
+        { "prompt": "Translate to English:", "question": "Jugad", "answer": "Workaround" }
+      ]
+    },
+    {
+      "vocabulary": [
+        ["Mujhe lagta hai", "I think"],
+        ["Mujhe nahi lagta", "I don't think so"],
+        ["Aapka kya vichar hai?", "What's your opinion?"],
+        ["Main sehmat hoon", "I agree"],
+        ["Main asahmat hoon", "I disagree"]
+      ],
+      "practice": [
+        { "prompt": "Translate to Hindi (Latin script):", "question": "I agree", "answer": "Main sehmat hoon" },
+        { "prompt": "Translate to English:", "question": "Aapka kya vichar hai?", "answer": "What's your opinion?" }
+      ]
+    },
+    {
+      "vocabulary": [
+        ["Ek baar ki baat hai", "Once upon a time"],
+        ["Phir kya hua?", "Then what happened?"],
+        ["Kahani sunaiye", "Tell a story"],
+        ["Ant mein", "In the end"],
+        ["Seekh kya mili?", "What did you learn?"]
+      ],
+      "practice": [
+        { "prompt": "Translate to Hindi (Latin script):", "question": "Tell a story", "answer": "Kahani sunaiye" },
+        { "prompt": "Translate to English:", "question": "Seekh kya mili?", "answer": "What did you learn?" }
+      ]
+    },
+    {
+      "vocabulary": [
+        ["Kripya", "Please (formal)"],
+        ["Dhanyavaad", "Thank you (formal)"],
+        ["Aapka samay dene ke liye dhanyavaad", "Thank you for your time"],
+        ["Aap se milkar accha laga", "Nice to meet you"],
+        ["Sampark mein rahiye", "Stay in touch"]
+      ],
+      "practice": [
+        { "prompt": "Translate to Hindi (Latin script):", "question": "Thank you for your time", "answer": "Aapka samay dene ke liye dhanyavaad" },
+        { "prompt": "Translate to English:", "question": "Sampark mein rahiye", "answer": "Stay in touch" }
+      ]
+    }
+  ]
+} 
