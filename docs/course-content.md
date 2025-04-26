@@ -1,7 +1,7 @@
 # Hindi Learning Course Content
 
-## Module 1: Script Fundamentals (Week 1-2)
-### 1.1 Vowels (स्वर)
+## Chapter 1: Script Fundamentals (Week 1-2)
+### Sub-Chapter 1.1: Vowels (स्वर)
 - Basic Vowels:
   - अ (a), आ (aa), इ (i), ई (ee), उ (u), ऊ (oo)
   - ए (e), ऐ (ai), ओ (o), औ (au)
@@ -13,7 +13,7 @@
   - उल्लू (owl)
   - ऊन (wool)
 
-### 1.2 Consonants (व्यंजन)
+### Sub-Chapter 1.2: Consonants (व्यंजन)
 - First Set (क to ङ):
   - क (ka), ख (kha), ग (ga), घ (gha), ङ (nga)
   - Practice: कमल (lotus), गमला (pot)
@@ -21,8 +21,8 @@
   - च (cha), छ (chha), ज (ja), झ (jha), ञ (nya)
   - Practice: चाय (tea), जल (water)
 
-## Module 2: Essential Vocabulary (Week 2-4)
-### 2.1 Survival Phrases
+## Chapter 2: Essential Vocabulary (Week 2-4)
+### Sub-Chapter 2.1: Survival Phrases
 - Greetings:
   - नमस्ते (Hello)
   - कैसे हैं? (How are you?)
@@ -33,7 +33,7 @@
   - यह क्या है? (What is this?)
   - कितना है? (How much is it?)
 
-### 2.2 Common Nouns
+### Sub-Chapter 2.2: Common Nouns
 - People:
   - माँ (mother), पिता (father)
   - भाई (brother), बहन (sister)
@@ -42,14 +42,14 @@
   - घर (house), स्कूल (school)
   - दुकान (shop), बाज़ार (market)
 
-## Module 3: Grammar Basics (Week 4-6)
-### 3.1 Sentence Structure
+## Chapter 3: Grammar Basics (Week 4-6)
+### Sub-Chapter 3.1: Sentence Structure
 - Basic Pattern: Subject + Object + Verb
 - Examples:
   - मैं पानी पीता हूँ (I drink water)
   - वह किताब पढ़ती है (She reads a book)
 
-### 3.2 Present Tense
+### Sub-Chapter 3.2: Present Tense
 - Masculine Forms:
   - -ता हूँ (I)
   - -ता है (He)
@@ -59,8 +59,8 @@
   - -ती है (She)
   - -ती हैं (They)
 
-## Module 4: Practical Usage (Week 6-8)
-### 4.1 Daily Conversations
+## Chapter 4: Practical Usage (Week 6-8)
+### Sub-Chapter 4.1: Daily Conversations
 - At Restaurant:
   - मुझे एक चाय चाहिए (I want one tea)
   - बिल लाइए (Bring the bill)
@@ -68,7 +68,7 @@
   - यह कितने का है? (How much is this?)
   - क्या आप कम कर सकते हैं? (Can you reduce the price?)
 
-### 4.2 Numbers and Time
+### Sub-Chapter 4.2: Numbers and Time
 - Numbers 1-100
 - Time Expressions:
   - सुबह (morning)
@@ -76,13 +76,13 @@
   - शाम (evening)
   - रात (night)
 
-## Module 5: Cultural Context (Week 8-10)
-### 5.1 Common Idioms
+## Chapter 5: Cultural Context (Week 8-10)
+### Sub-Chapter 5.1: Common Idioms
 - आसमान से बातें करना (to talk big)
 - दाल न गलना (to be in trouble)
 - हाथ पैर फूलना (to be nervous)
 
-### 5.2 Cultural References
+### Sub-Chapter 5.2: Cultural References
 - Festivals:
   - दिवाली (Diwali)
   - होली (Holi)
@@ -120,4 +120,39 @@
 3. Intermediate (2001-5000 XP)
    - Complex sentences
    - 500 words
-   - Cultural understanding 
+   - Cultural understanding
+
+---
+
+## Example JSON Structure for Chapters and Sub-Chapters
+
+```json
+[
+  {
+    "chapter": "Script Fundamentals",
+    "subChapters": [
+      {
+        "title": "Vowels (स्वर)",
+        "content": [
+          "अ (a)", "आ (aa)", "इ (i)", "ई (ee)", "उ (u)", "ऊ (oo)",
+          "ए (e)", "ऐ (ai)", "ओ (o)", "औ (au)"
+        ],
+        "practice": ["अमर (immortal)", "आम (mango)"]
+      },
+      {
+        "title": "Consonants (व्यंजन)",
+        "content": ["क (ka)", "ख (kha)", "ग (ga)", "घ (gha)", "ङ (nga)"]
+      }
+    ]
+  },
+  {
+    "chapter": "Essential Vocabulary",
+    "subChapters": [
+      {
+        "title": "Survival Phrases",
+        "content": ["नमस्ते (Hello)", "धन्यवाद (Thank you)"]
+      }
+    ]
+  }
+]
+``` 
