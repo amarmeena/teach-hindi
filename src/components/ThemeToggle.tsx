@@ -1,7 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
+import type { ButtonHTMLAttributes } from "react";
 
-export default function ThemeToggle() {
+interface ThemeToggleProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  className?: string;
+}
+
+export default function ThemeToggle({ className = "", ...props }: ThemeToggleProps) {
   // Always start as 'light' to match SSR
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [mounted, setMounted] = useState(false);
@@ -33,10 +38,11 @@ export default function ThemeToggle() {
       aria-label="Toggle theme"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       className={
-        `fixed top-4 right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center border border-gray-300 dark:border-gray-700
-        focus:outline-none focus:ring-2 focus:ring-gray-400 active:scale-95 transition-transform
-        bg-black text-white dark:bg-white dark:text-black`
+        className
+          ? className + " w-10 h-10 rounded-full flex items-center justify-center border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 active:scale-95 transition-transform bg-black text-white dark:bg-white dark:text-black"
+          : "fixed top-4 right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 active:scale-95 transition-transform bg-black text-white dark:bg-white dark:text-black"
       }
+      {...props}
     >
       {theme === "dark" ? (
         // Filled sun icon

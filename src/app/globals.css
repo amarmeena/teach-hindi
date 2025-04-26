@@ -43,7 +43,22 @@ body {
   font-size: 1rem;
   line-height: 1.6;
   background-image: linear-gradient(135deg, #fff 0%, #F3F4F6 100%);
-  transition: background 0.4s cubic-bezier(.4,0,.2,1);
+  transition: background 0.4s cubic-bezier(.4,0,.2,1), color 0.4s cubic-bezier(.4,0,.2,1);
+  transition-property: background, color;
+  transition-duration: 0.5s;
+}
+
+main, .main-content, .min-h-screen, .flex {
+  transition: background 0.5s, color 0.5s;
+}
+
+/* Sidebar transitions */
+.sidebar-overlay {
+  transition: opacity 0.3s;
+}
+
+.sidebar-panel {
+  transition: transform 0.3s;
 }
 
 /* App card style */
