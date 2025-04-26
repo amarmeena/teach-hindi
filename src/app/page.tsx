@@ -109,102 +109,82 @@ export default function Home() {
   return (
     <>
       {/* Mobile Top Bar: Sidebar + Dark Mode Toggle */}
-      <div className="md:hidden flex justify-between items-center w-full px-4 pt-6 bg-white dark:bg-black text-black dark:text-white">
-        {/* Sidebar Toggle */}
-        <button
-          className="w-11 h-11 rounded-full flex items-center justify-center border border-gray-300 dark:border-gray-700 bg-black text-white dark:bg-white dark:text-black focus:outline-none focus:ring-2 focus:ring-gray-400 active:scale-95 transition-transform"
-          onClick={() => setSidebarOpen((open) => !open)}
-          aria-label="Open course progress sidebar"
-        >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="text-white dark:text-black">
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <line x1="3" y1="12" x2="21" y2="12"/>
-            <line x1="3" y1="18" x2="21" y2="18"/>
-          </svg>
-          <span className="sr-only">Open course progress sidebar</span>
-        </button>
-        {/* Dark Mode Toggle */}
-        <div className="w-11 h-11 flex items-center justify-center">
+      <header className="w-full bg-white dark:bg-black text-black dark:text-white border-b border-gray-200 dark:border-gray-800">
+        <div className="w-full flex items-center justify-between px-4 py-4">
+          {/* Sidebar Toggle */}
+          <button
+            className="w-11 h-11 rounded-full flex items-center justify-center border border-gray-300 dark:border-gray-700 bg-black text-white dark:bg-white dark:text-black focus:outline-none focus:ring-2 focus:ring-gray-400 active:scale-95 transition-transform"
+            onClick={() => setSidebarOpen((open) => !open)}
+            aria-label="Open course progress sidebar"
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="text-white dark:text-black">
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+            <span className="sr-only">Open course progress sidebar</span>
+          </button>
+          {/* Dark Mode Toggle */}
           <ThemeToggle className="w-11 h-11" />
         </div>
-      </div>
+      </header>
       <div className="min-h-screen flex bg-white dark:bg-black font-sans">
-        {/* Progress Sidebar */}
-        <aside className="hidden md:flex flex-col w-64 bg-white dark:bg-black text-gray-900 dark:text-white p-6 border-r border-gray-200 dark:border-gray-800 min-h-screen sticky top-0 pb-8">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Course Progress</h2>
-          <ol className="space-y-3">
-            {lessons.map((lesson, idx) => (
-              <li
-                key={lesson}
-                className={`flex items-center gap-3 px-3 py-2 rounded-xl transition-colors text-base font-semibold cursor-pointer select-none min-h-[44px] shadow-sm
-                  ${idx === currentStep
-                    ? "bg-gray-900 text-white dark:bg-white dark:text-black border-2 border-gray-900 dark:border-white"
-                    : "bg-white text-gray-900 border border-gray-300 dark:bg-black dark:text-white dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"}
-                `}
-                onClick={() => jumpToLesson(idx)}
-                tabIndex={0}
-                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') jumpToLesson(idx); }}
-                aria-current={idx === currentStep ? 'step' : undefined}
-                aria-label={`Go to lesson: ${lesson}`}
-              >
-                <span className={`w-7 h-7 flex items-center justify-center rounded-full font-bold min-w-[44px] min-h-[44px] text-base
-                  ${idx === currentStep
-                    ? "bg-white text-gray-900 border-2 border-gray-900 dark:bg-gray-900 dark:text-white dark:border-white"
-                    : "bg-white text-gray-900 border border-gray-300 dark:bg-black dark:text-white dark:border-gray-700"}
-                `}>{idx + 1}</span>
-                <span>{lesson}</span>
-              </li>
-            ))}
-          </ol>
-          <div className="mt-8 text-sm text-gray-500 dark:text-gray-400">
-            Step {currentStep + 1} of {lessons.length}
-          </div>
-        </aside>
-
-        {/* Mobile Sidebar */}
-        <aside className={`fixed inset-0 z-30 flex sidebar-overlay transition-all duration-300 ${sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-          <div className={`sidebar-panel w-64 bg-white dark:bg-black text-gray-900 dark:text-white p-6 h-full flex flex-col transition-all duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-            <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Course Progress</h2>
-            <ol className="space-y-3">
-              {lessons.map((lesson, idx) => (
-                <li
-                  key={lesson}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-xl transition-colors text-base font-semibold cursor-pointer select-none min-h-[44px] shadow-sm
-                    ${idx === currentStep
+        {/* Collapsible Sidebar Overlay (all screens) */}
+        {sidebarOpen && (
+          <aside className="fixed inset-0 z-30 flex sidebar-overlay transition-all duration-300">
+            <div className="sidebar-panel w-64 bg-white dark:bg-black text-gray-900 dark:text-white p-6 h-full flex flex-col transition-all duration-300 translate-x-0">
+              <div className="flex items-center mb-6 justify-between">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Course Progress</h2>
+                <button
+                  className="w-10 h-10 rounded-full flex items-center justify-center border border-gray-300 dark:border-gray-700 bg-black text-white dark:bg-white dark:text-black ml-2"
+                  onClick={() => setSidebarOpen(false)}
+                  aria-label="Close sidebar"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+              </div>
+              <ol className="space-y-3">
+                {lessons.map((lesson, idx) => (
+                  <li
+                    key={lesson}
+                    className={`flex items-center gap-3 px-3 py-2 rounded-xl transition-colors text-base font-semibold cursor-pointer select-none min-h-[44px] shadow-sm
+                      ${idx === currentStep
                       ? "bg-gray-900 text-white dark:bg-white dark:text-black border-2 border-gray-900 dark:border-white"
                       : "bg-white text-gray-900 border border-gray-300 dark:bg-black dark:text-white dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"}
-                  `}
-                  onClick={() => { jumpToLesson(idx); setSidebarOpen(false); }}
-                  tabIndex={0}
-                  onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { jumpToLesson(idx); setSidebarOpen(false); } }}
-                  aria-current={idx === currentStep ? 'step' : undefined}
-                  aria-label={`Go to lesson: ${lesson}`}
-                >
-                  <span className={`w-7 h-7 flex items-center justify-center rounded-full font-bold min-w-[44px] min-h-[44px] text-base
-                    ${idx === currentStep
+                    `}
+                    onClick={() => { jumpToLesson(idx); setSidebarOpen(false); }}
+                    tabIndex={0}
+                    onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { jumpToLesson(idx); setSidebarOpen(false); } }}
+                    aria-current={idx === currentStep ? 'step' : undefined}
+                    aria-label={`Go to lesson: ${lesson}`}
+                  >
+                    <span className={`w-7 h-7 flex items-center justify-center rounded-full font-bold min-w-[44px] min-h-[44px] text-base
+                      ${idx === currentStep
                       ? "bg-white text-gray-900 border-2 border-gray-900 dark:bg-gray-900 dark:text-white dark:border-white"
                       : "bg-white text-gray-900 border border-gray-300 dark:bg-black dark:text-white dark:border-gray-700"}
-                  `}>{idx + 1}</span>
-                  <span>{lesson}</span>
-                </li>
-              ))}
-            </ol>
-            <div className="mt-8 text-sm text-gray-500 dark:text-gray-400">
-              Step {currentStep + 1} of {lessons.length}
+                    `}>{idx + 1}</span>
+                    <span>{lesson}</span>
+                  </li>
+                ))}
+              </ol>
+              <div className="mt-8 text-sm text-gray-500 dark:text-gray-400">
+                Step {currentStep + 1} of {lessons.length}
+              </div>
             </div>
-            <Button className="mt-8" variant="secondary" onClick={() => setSidebarOpen(false)}>
-              Close
-            </Button>
-          </div>
-          <div className="flex-1" onClick={() => setSidebarOpen(false)} />
-        </aside>
+            {/* Backdrop */}
+            <div className="flex-1 bg-black bg-opacity-30 dark:bg-opacity-50" onClick={() => setSidebarOpen(false)} />
+          </aside>
+        )}
 
         {/* Main Content */}
         <main className="flex-1 p-4 md:p-8">
           <div className="max-w-4xl mx-auto">
             {/* Lesson Card */}
             <div
-              className={`mb-12 mt-16 bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-xl p-6 transition-all duration-300 ease-in-out ${isTransitioning ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'}`}
+              className={`mb-10 mt-10 bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-xl p-6 transition-all duration-300 ease-in-out ${isTransitioning ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'}`}
               style={{ transitionProperty: 'opacity, transform' }}
             >
               <div className="flex items-center mb-4">
