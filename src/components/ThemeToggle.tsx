@@ -33,9 +33,9 @@ export default function ThemeToggle() {
       aria-label="Toggle theme"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       className={
-        `fixed top-4 right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center shadow-lg border border-blue-400 dark:border-gray-700
-        focus:outline-none focus:ring-2 focus:ring-blue-400 active:scale-95 transition-transform
-        bg-blue-600 text-white dark:bg-[#23272f] dark:text-blue-400 hover:bg-blue-700 dark:hover:bg-blue-900`
+        `fixed top-4 right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center border border-gray-300 dark:border-gray-700
+        focus:outline-none focus:ring-2 focus:ring-gray-400 active:scale-95 transition-transform
+        bg-black text-white dark:bg-white dark:text-black`
       }
     >
       {theme === "dark" ? (

@@ -10,17 +10,34 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        blue: {
-          50: '#F0F7FF',
-          100: '#D6ECFF',
-          200: '#ADD8FF',
-          300: '#7FC2FF',
-          400: '#4FA6FF',
-          500: '#218AFF',
-          600: '#007AFF', // Apple system blue
-          700: '#0066CC',
-          800: '#0052A3',
-          900: '#003366',
+        background: {
+          light: '#F3F4F6',
+          dark: '#18181B',
+        },
+        surface: {
+          DEFAULT: '#FFFFFF',
+        },
+        text: {
+          light: '#18181B',
+          dark: '#F3F4F6',
+        },
+        border: {
+          light: '#E5E7EB',
+          dark: '#2D2F36',
+        },
+        black: '#000',
+        white: '#fff',
+        gray: {
+          50: '#F9FAFB',
+          100: '#F3F4F6',
+          200: '#E5E7EB',
+          300: '#D1D5DB',
+          400: '#9CA3AF',
+          500: '#6B7280',
+          600: '#4B5563',
+          700: '#374151',
+          800: '#1F2937',
+          900: '#111827',
         },
       },
       fontFamily: {

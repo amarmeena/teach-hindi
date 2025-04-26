@@ -4,8 +4,11 @@
 
 /* Your custom CSS below */
 :root {
-  --background: #f7f7fa;
-  --foreground: #18181b;
+  --background: #F2F2F7;
+  --foreground: #1C1C1E;
+  --surface: #FFFFFF;
+  --border: #D1D1D6;
+  --gray: #8E8E93;
 }
 
 @theme inline {
@@ -17,18 +20,160 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #23272f;
-    --foreground: #f3f4f6;
+    --background: #1C1C1E;
+    --foreground: #F2F2F7;
+    --surface: #2C2C2E;
+    --border: #3A3A3C;
+    --gray: #8E8E93;
   }
 }
 
 .dark :root {
-  --background: #23272f;
-  --foreground: #f3f4f6;
+  --background: #1C1C1E;
+  --foreground: #F2F2F7;
+  --surface: #2C2C2E;
+  --border: #3A3A3C;
+  --gray: #8E8E93;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  background-image: linear-gradient(135deg, #fff 0%, #F3F4F6 100%);
+  transition: background 0.4s cubic-bezier(.4,0,.2,1);
+}
+
+/* App card style */
+.app-card {
+  background: linear-gradient(135deg, #fff 60%, #F3F4F6 100%);
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.08), 0 1.5px 6px 0 rgba(0,0,0,0.04);
+  border: 1px solid #E5E7EB;
+  padding: 1.5rem;
+  transition: box-shadow 0.2s, background 0.4s cubic-bezier(.4,0,.2,1);
+}
+
+.dark .app-card {
+  background: linear-gradient(135deg, #23272F 60%, #18181B 100%);
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18), 0 1.5px 6px 0 rgba(0,0,0,0.10);
+  border: 1px solid #2D2F36;
+}
+
+/* Flashcard 3D flip animation */
+.flashcard {
+  perspective: 800px;
+}
+
+.flashcard-inner {
+  transition: transform 0.5s cubic-bezier(.4,0,.2,1);
+  transform-style: preserve-3d;
+}
+
+.flashcard.flipped .flashcard-inner {
+  transform: rotateY(180deg);
+}
+
+.flashcard-front, .flashcard-back {
+  backface-visibility: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+}
+
+.flashcard-back {
+  transform: rotateY(180deg);
+}
+
+/* App button style */
+.app-btn {
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.1s;
+  outline: none;
+  position: relative;
+  background: #111827;
+  color: #fff;
+  border: 1px solid #111827;
+}
+
+.app-btn:focus {
+  box-shadow: 0 0 0 3px #111827, 0 2px 8px 0 rgba(0,0,0,0.10);
+}
+
+.app-btn:active {
+  transform: scale(0.97);
+}
+
+.app-btn:hover {
+  box-shadow: 0 4px 16px 0 rgba(0,0,0,0.14);
+  background: #222;
+  color: #fff;
+}
+
+.dark .app-btn {
+  background: #fff;
+  color: #18181B;
+  border: 1px solid #fff;
+}
+
+.dark .app-btn:hover {
+  background: #F3F4F6;
+  color: #18181B;
+}
+
+/* Ripple effect for button clicks */
+.app-btn::after {
+  content: '';
+  display: block;
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  background: rgba(0,0,0,0.08);
+  transition: opacity 0.4s, transform 0.4s;
+}
+
+.app-btn:active::after {
+  opacity: 1;
+  transform: scale(1.2);
+  transition: 0s;
+}
+
+/* Section divider */
+.section-divider {
+  height: 2px;
+  background: linear-gradient(90deg, #111827 0%, #E5E7EB 100%);
+  border-radius: 1px;
+  margin: 2rem 0;
+  opacity: 0.12;
+}
+
+/* Accent bar for current lesson */
+.lesson-accent {
+  width: 6px;
+  height: 32px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #111827 0%, #E5E7EB 100%);
+  margin-right: 0.75rem;
+}
+
+/* Headings for Stoic look */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--foreground);
+  font-family: inherit;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  margin-bottom: 0.5em;
+  transition: color 0.3s;
 }

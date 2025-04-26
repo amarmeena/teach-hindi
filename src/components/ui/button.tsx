@@ -11,15 +11,15 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         className={cn(
-          "inline-flex items-center justify-center font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none shadow-sm",
-          "rounded-full",
+          "inline-flex items-center justify-center font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none",
+          "rounded-full min-h-[44px]",
           {
-            // Apple primary: filled blue, white text
-            "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800": variant === "default",
-            // Apple secondary: white, black text, border
+            // Flat grayscale primary
+            "bg-black text-white hover:bg-gray-900 active:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 dark:active:bg-gray-300": variant === "default",
+            // Flat grayscale secondary
             "bg-white text-black border border-gray-300 hover:bg-gray-100 active:bg-gray-200 dark:bg-black dark:text-white dark:border-gray-700 dark:hover:bg-gray-900 dark:active:bg-gray-800": variant === "secondary",
-            // Apple ghost: transparent, subtle hover
-            "bg-transparent text-blue-600 hover:bg-blue-50 active:bg-blue-100 dark:text-blue-400 dark:hover:bg-blue-900": variant === "ghost",
+            // Flat grayscale ghost
+            "bg-transparent text-black hover:bg-gray-100 active:bg-gray-200 dark:text-white dark:hover:bg-gray-900 dark:active:bg-gray-800": variant === "ghost",
           },
           {
             "h-8 px-4 text-sm": size === "sm",

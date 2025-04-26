@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { FiXCircle } from "react-icons/fi";
+import { MdSportsEsports } from "react-icons/md";
 
 // Define types for course content
 interface PracticeItem {
@@ -20,6 +22,10 @@ export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   // Track which answers are shown for the current lesson
   const [shownAnswers, setShownAnswers] = useState<{ [key: number]: boolean }>({});
+  // Practice mode state
+  const [practiceMode, setPracticeMode] = useState(false);
+  // Track which flashcards are flipped
+  const [flipped, setFlipped] = useState<{ [key: number]: boolean }>({});
 
   useEffect(() => {
     async function fetchCourseData() {
@@ -34,6 +40,12 @@ export default function Home() {
     }
     fetchCourseData();
   }, []);
+
+  // Reset shown answers and flipped cards when lesson or mode changes
+  useEffect(() => {
+    setShownAnswers({});
+    setFlipped({});
+  }, [currentStep, practiceMode]);
 
   // Reset shown answers when lesson changes
   const handleLessonChange = (idx: number) => {
@@ -65,23 +77,27 @@ export default function Home() {
     <div className="min-h-screen flex bg-white dark:bg-black font-sans">
       {/* Progress Sidebar */}
       <aside className="hidden md:flex flex-col w-64 bg-white dark:bg-black text-gray-900 dark:text-white p-6 border-r border-gray-200 dark:border-gray-800 min-h-screen sticky top-0">
-        <h2 className="text-xl font-bold mb-6 tracking-tight">Course Progress</h2>
+        <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Course Progress</h2>
         <ol className="space-y-3">
           {lessons.map((lesson, idx) => (
             <li
               key={lesson}
-              className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-base font-medium cursor-pointer select-none ${
-                idx === currentStep
-                  ? "bg-blue-600 text-white shadow"
-                  : "bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white hover:bg-blue-50 dark:hover:bg-gray-800"
-              }`}
+              className={`flex items-center gap-3 px-3 py-2 rounded-xl transition-colors text-base font-semibold cursor-pointer select-none min-h-[44px] shadow-sm
+                ${idx === currentStep
+                  ? "bg-gray-900 text-white dark:bg-white dark:text-black border-2 border-gray-900 dark:border-white"
+                  : "bg-white text-gray-900 border border-gray-300 dark:bg-black dark:text-white dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"}
+              `}
               onClick={() => jumpToLesson(idx)}
               tabIndex={0}
               onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') jumpToLesson(idx); }}
               aria-current={idx === currentStep ? 'step' : undefined}
               aria-label={`Go to lesson: ${lesson}`}
             >
-              <span className={`w-7 h-7 flex items-center justify-center rounded-full border-2 ${idx === currentStep ? "border-white bg-blue-700" : "border-blue-400 bg-white dark:bg-black"} text-xs font-bold`}>{idx + 1}</span>
+              <span className={`w-7 h-7 flex items-center justify-center rounded-full font-bold min-w-[44px] min-h-[44px] text-base
+                ${idx === currentStep
+                  ? "bg-white text-gray-900 border-2 border-gray-900 dark:bg-gray-900 dark:text-white dark:border-white"
+                  : "bg-white text-gray-900 border border-gray-300 dark:bg-black dark:text-white dark:border-gray-700"}
+              `}>{idx + 1}</span>
               <span>{lesson}</span>
             </li>
           ))}
@@ -93,11 +109,11 @@ export default function Home() {
 
       {/* Mobile Sidebar Toggle */}
       <button
-        className="md:hidden fixed top-4 left-4 z-20 w-10 h-10 rounded-full flex items-center justify-center shadow-lg border border-blue-400 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 active:scale-95 transition-transform bg-blue-600 text-white dark:bg-[#23272f] dark:text-blue-400 hover:bg-blue-700 dark:hover:bg-blue-900"
+        className="md:hidden fixed top-4 left-4 z-20 w-11 h-11 rounded-full flex items-center justify-center border border-gray-300 dark:border-gray-700 bg-black text-white dark:bg-white dark:text-black focus:outline-none focus:ring-2 focus:ring-gray-400 active:scale-95 transition-transform"
         onClick={() => setSidebarOpen((open) => !open)}
         aria-label="Open course progress sidebar"
       >
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="text-white dark:text-black">
           <line x1="3" y1="6" x2="21" y2="6"/>
           <line x1="3" y1="12" x2="21" y2="12"/>
           <line x1="3" y1="18" x2="21" y2="18"/>
@@ -108,23 +124,27 @@ export default function Home() {
       {sidebarOpen && (
         <aside className="fixed inset-0 z-30 bg-black/70 flex">
           <div className="w-64 bg-white dark:bg-black text-gray-900 dark:text-white p-6 h-full flex flex-col">
-            <h2 className="text-xl font-bold mb-6 tracking-tight">Course Progress</h2>
+            <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Course Progress</h2>
             <ol className="space-y-3">
               {lessons.map((lesson, idx) => (
                 <li
                   key={lesson}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-base font-medium cursor-pointer select-none ${
-                    idx === currentStep
-                      ? "bg-blue-600 text-white shadow"
-                      : "bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white hover:bg-blue-50 dark:hover:bg-gray-800"
-                  }`}
+                  className={`flex items-center gap-3 px-3 py-2 rounded-xl transition-colors text-base font-semibold cursor-pointer select-none min-h-[44px] shadow-sm
+                    ${idx === currentStep
+                      ? "bg-gray-900 text-white dark:bg-white dark:text-black border-2 border-gray-900 dark:border-white"
+                      : "bg-white text-gray-900 border border-gray-300 dark:bg-black dark:text-white dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"}
+                  `}
                   onClick={() => { jumpToLesson(idx); setSidebarOpen(false); }}
                   tabIndex={0}
                   onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { jumpToLesson(idx); setSidebarOpen(false); } }}
                   aria-current={idx === currentStep ? 'step' : undefined}
                   aria-label={`Go to lesson: ${lesson}`}
                 >
-                  <span className={`w-7 h-7 flex items-center justify-center rounded-full border-2 ${idx === currentStep ? "border-white bg-blue-700" : "border-blue-400 bg-white dark:bg-black"} text-xs font-bold`}>{idx + 1}</span>
+                  <span className={`w-7 h-7 flex items-center justify-center rounded-full font-bold min-w-[44px] min-h-[44px] text-base
+                    ${idx === currentStep
+                      ? "bg-white text-gray-900 border-2 border-gray-900 dark:bg-gray-900 dark:text-white dark:border-white"
+                      : "bg-white text-gray-900 border border-gray-300 dark:bg-black dark:text-white dark:border-gray-700"}
+                  `}>{idx + 1}</span>
                   <span>{lesson}</span>
                 </li>
               ))}
@@ -145,59 +165,71 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl font-bold mb-8 text-center tracking-tight text-gray-900 dark:text-white">Learn Hindi</h1>
           {/* Lesson Card */}
-          <div className="bg-white dark:bg-black rounded-2xl shadow-lg p-6 mb-8 border border-gray-100 dark:border-gray-800">
-            <h2 className="text-2xl font-semibold mb-4 tracking-tight text-gray-900 dark:text-white">{lessons[currentStep]}</h2>
+          <div className="mb-8 bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-xl p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-2xl font-bold text-black dark:text-white mb-4">{lessons[currentStep]}</h2>
+              {practiceMode && (
+                <button
+                  onClick={() => setPracticeMode(false)}
+                  aria-label="Exit Practice Mode"
+                  className="ml-4 w-10 h-10 flex items-center justify-center bg-[#1C1C1E] text-white dark:bg-[#F2F2F7] dark:text-black border-none rounded-full transition-colors"
+                  tabIndex={0}
+                >
+                  <FiXCircle className="w-5 h-5 text-white dark:text-black" />
+                  <span className="sr-only">Exit Practice Mode</span>
+                </button>
+              )}
+              {!practiceMode && (
+                <button
+                  onClick={() => setPracticeMode(true)}
+                  aria-label="Enter Practice Mode"
+                  className="ml-4 w-10 h-10 flex items-center justify-center bg-black text-white dark:bg-white dark:text-black border-none rounded-full transition-colors"
+                  tabIndex={0}
+                >
+                  <MdSportsEsports className="w-5 h-5 text-white dark:text-black" />
+                  <span className="sr-only">Enter Practice Mode</span>
+                </button>
+              )}
+            </div>
             {/* Vocabulary Section */}
             <div className="mb-6">
-              <h3 className="text-lg font-medium mb-3 text-gray-800 dark:text-gray-200">Vocabulary</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {courseContent[currentStep].vocabulary.map(([hindi, english]: [string, string], i: number) => (
-                  <div key={i} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
-                    <span className="font-medium text-gray-900 dark:text-white">{hindi}</span>
-                    <span className="text-gray-600 dark:text-gray-300">{english}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            {/* Practice Section */}
-            <div>
-              <h3 className="text-lg font-medium mb-3 text-gray-800 dark:text-gray-200">Practice</h3>
-              <div className="space-y-4">
-                {courseContent[currentStep].practice.map((item: PracticeItem, i: number) => (
-                  <div key={i} className="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
-                    <p className="mb-2 text-gray-800 dark:text-gray-200">{item.prompt}</p>
-                    <p className="font-medium text-gray-900 dark:text-white">{item.question}</p>
-                    <div className="mt-3 flex items-center gap-4">
-                      <Button
-                        variant="secondary"
-                        size="sm"
-                        className="rounded-full shadow-sm"
-                        onClick={() => toggleAnswer(i)}
-                        aria-expanded={!!shownAnswers[i]}
-                        aria-controls={`answer-${i}`}
-                      >
-                        {shownAnswers[i] ? "Hide Answer" : "Show Answer"}
-                      </Button>
-                      {shownAnswers[i] && (
-                        <span
-                          id={`answer-${i}`}
-                          className="ml-2 text-blue-700 dark:text-blue-400 font-semibold"
-                        >
-                          {item.answer}
-                        </span>
-                      )}
+              <h3 className="text-lg font-bold mb-4 text-black dark:text-white">Vocabulary</h3>
+              {practiceMode ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {courseContent[currentStep].vocabulary.map(([hindi, english]: [string, string], i: number) => (
+                    <div
+                      key={i}
+                      className={`relative cursor-pointer select-none rounded-xl border border-gray-200 dark:border-gray-700 transition-all duration-300 py-2 px-3 flex items-center justify-center min-h-[36px] text-base
+                        ${flipped[i] ? 'bg-gray-300 dark:bg-gray-600' : 'bg-gray-100 dark:bg-gray-800'}`}
+                      onClick={() => setFlipped(f => ({ ...f, [i]: !f[i] }))}
+                      tabIndex={0}
+                      onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setFlipped(f => ({ ...f, [i]: !f[i] })); }}
+                      aria-label={flipped[i] ? english : hindi}
+                    >
+                      <span className="font-semibold text-black dark:text-white transition-all duration-300 text-center w-full">
+                        {flipped[i] ? english : hindi}
+                      </span>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {courseContent[currentStep].vocabulary.map(([hindi, english]: [string, string], i: number) => (
+                    <div key={i} className="flex items-center justify-between p-3 bg-gray-100 text-black border border-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-700 rounded-xl">
+                      <span className="font-medium text-base text-left flex-1">{hindi}</span>
+                      <span className="text-gray-500 dark:text-gray-300 text-base text-right flex-1">{english}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
           {/* Navigation */}
           <div className="flex justify-between">
-            <Button variant="secondary" onClick={goToPrev} disabled={currentStep === 0} className="rounded-full shadow-sm">
+            <Button variant="secondary" onClick={goToPrev} disabled={currentStep === 0} className="rounded-full">
               Previous Lesson
             </Button>
-            <Button onClick={goToNext} disabled={currentStep === lessons.length - 1} className="rounded-full shadow-sm">
+            <Button onClick={goToNext} disabled={currentStep === lessons.length - 1} className="rounded-full">
               Next Lesson
             </Button>
           </div>
