@@ -7,6 +7,7 @@ import { MdSportsEsports } from "react-icons/md";
 import ThemeToggle from "@/components/ThemeToggle";
 import { Toast } from "@/components/ui/Toast";
 import { WelcomeModal } from "@/components/ui/WelcomeModal";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 // Define a placeholder PracticeItem type for now
 interface PracticeItem {
@@ -48,6 +49,7 @@ export default function Home() {
   const [showWelcome, setShowWelcome] = useState(false);
   const [streakLandingAnim, setStreakLandingAnim] = useState("");
   const [practiceMode, setPracticeMode] = useState(false);
+  const { data: session } = useSession();
 
   const motivationalMessages = {
     zero: [
@@ -344,6 +346,17 @@ export default function Home() {
         {/* Main Content */}
         <main className="flex-1 p-4 md:p-8">
           <div className="max-w-4xl mx-auto">
+            {/* Auth UI */}
+            <div className="mb-6 flex items-center gap-4">
+              {session ? (
+                <>
+                  <span className="font-semibold">Welcome, {session.user?.name || session.user?.email}</span>
+                  <button className="app-btn px-4 py-2 rounded" onClick={() => signOut()}>Sign out</button>
+                </>
+              ) : (
+                <button className="app-btn px-4 py-2 rounded" onClick={() => signIn("google")}>Sign in with Google</button>
+              )}
+            </div>
             <WelcomeModal open={showWelcome} onClose={handleCloseWelcome} />
             {toast && (
               <Toast
