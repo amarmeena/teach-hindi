@@ -8,10 +8,17 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { Toast } from "@/components/ui/Toast";
 import { WelcomeModal } from "@/components/ui/WelcomeModal";
 
+// Define a placeholder PracticeItem type for now
+interface PracticeItem {
+  question: string;
+  answer: string;
+  // Add more fields as needed
+}
+
 // Define types for course content
 interface LessonContent {
-  vocabulary: [string, string][];
-  practice: PracticeItem[];
+  content: [string, string][];
+  // Remove vocabulary and practice for now, as they are not present in course.json
 }
 
 function playHindiAudio(text: string) {
@@ -40,6 +47,7 @@ export default function Home() {
   const [streakAnimation, setStreakAnimation] = useState<string>("");
   const [showWelcome, setShowWelcome] = useState(false);
   const [streakLandingAnim, setStreakLandingAnim] = useState("");
+  const [practiceMode, setPracticeMode] = useState(false);
 
   const motivationalMessages = {
     zero: [
@@ -375,7 +383,7 @@ export default function Home() {
                 <h3 className="text-lg font-bold mb-4 text-black dark:text-white">Vocabulary</h3>
                 {practiceMode ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {courseContent[currentStep].vocabulary.map(([hindi, english]: [string, string], i: number) => (
+                    {courseContent[currentStep].content.map(([hindi, english]: [string, string], i: number) => (
                       <div
                         key={i}
                         className={`relative cursor-pointer select-none rounded-xl border border-gray-200 dark:border-gray-700 transition-all duration-300 py-2 px-3 flex items-center justify-center min-h-[36px] text-base
@@ -402,7 +410,7 @@ export default function Home() {
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {courseContent[currentStep].vocabulary.map(([hindi, english]: [string, string], i: number) => (
+                    {courseContent[currentStep].content.map(([hindi, english]: [string, string], i: number) => (
                       <div key={i} className="flex items-center justify-between p-3 bg-gray-100 text-black border border-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-700 rounded-xl">
                         <span className="font-medium text-base text-left flex-1 flex items-center gap-2">
                           {hindi}
@@ -436,11 +444,11 @@ export default function Home() {
               </Button>
 
               <Button
-                onClick={() => setSidebarOpen(true)}
+                onClick={() => setPracticeMode((v) => !v)}
                 className="rounded-full flex items-center justify-center min-w-[44px] md:w-44"
               >
                 <span className="md:hidden"><MdSportsEsports className="w-5 h-5" /></span>
-                <span className="hidden md:inline-flex items-center gap-x-2">Lessons<MdSportsEsports className="w-5 h-5" /></span>
+                <span className="hidden md:inline-flex items-center gap-x-2">{practiceMode ? 'Lesson Mode' : 'Quiz Mode'}<MdSportsEsports className="w-5 h-5" /></span>
               </Button>
 
               <Button
