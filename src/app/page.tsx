@@ -1,9 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { FiXCircle, FiArrowLeft, FiArrowRight, FiVolume2 } from "react-icons/fi";
 import { MdSportsEsports } from "react-icons/md";
 import ThemeToggle from "@/components/ThemeToggle";
+import { Toast } from "@/components/ui/Toast";
+import { WelcomeModal } from "@/components/ui/WelcomeModal";
 
 // Define types for course content
 interface PracticeItem {
@@ -36,6 +38,88 @@ export default function Home() {
   // Track which flashcards are flipped
   const [flipped, setFlipped] = useState<{ [key: number]: boolean }>({});
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [streak, setStreak] = useState(0);
+  const [highestStreak, setHighestStreak] = useState(0);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'info' | 'warning' | 'error' } | null>(null);
+  // Add a ref and state for animation
+  const streakRef = useRef<HTMLDivElement>(null);
+  const [animateStreak, setAnimateStreak] = useState(false);
+  const [motivation, setMotivation] = useState("");
+  const [streakAnimation, setStreakAnimation] = useState<string>("");
+  const [showWelcome, setShowWelcome] = useState(false);
+  const [streakLandingAnim, setStreakLandingAnim] = useState("");
+
+  const motivationalMessages = {
+    zero: [
+      "Every journey begins with a single step! Start your streak today.",
+      "Consistency is key! Begin your Hindi journey now.",
+      "No better time to start than today!",
+      "Your streak starts with one lesson. Let's go!"
+    ],
+    low: [
+      "Great start! Keep going!",
+      "You're building a habit!",
+      "Day by day, you're getting better!"
+    ],
+    mid: [
+      "You're on a roll!",
+      "Keep up the momentum!",
+      "Your dedication is paying off!"
+    ],
+    high: [
+      "Amazing! You're on fire!",
+      "Incredible consistency!",
+      "You're a Hindi learning superstar!"
+    ]
+  };
+
+  function calculateStreak() {
+    if (typeof window === 'undefined' || !window.localStorage) return;
+    const lastTimestamp = window.localStorage.getItem('lastActivityTimestamp');
+    let currentStreak = parseInt(window.localStorage.getItem('currentStreak') || '0', 10);
+    let highestStreak = parseInt(window.localStorage.getItem('highestStreak') || '0', 10);
+    const today = new Date();
+    let streakReset = false;
+    let newRecord = false;
+
+    if (!lastTimestamp) {
+      currentStreak = 0;
+    } else {
+      const lastDate = new Date(parseInt(lastTimestamp, 10));
+      const last = new Date(lastDate.getFullYear(), lastDate.getMonth(), lastDate.getDate());
+      const now = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const diffDays = Math.floor((now.getTime() - last.getTime()) / (1000 * 60 * 60 * 24));
+      if (diffDays === 0) {
+        // Already counted today
+      } else if (diffDays === 1) {
+        currentStreak += 1;
+        if (currentStreak > highestStreak) {
+          highestStreak = currentStreak;
+          newRecord = true;
+        }
+      } else {
+        if (currentStreak > highestStreak) {
+          highestStreak = currentStreak;
+        }
+        currentStreak = 1;
+        streakReset = true;
+      }
+    }
+    window.localStorage.setItem('currentStreak', currentStreak.toString());
+    window.localStorage.setItem('highestStreak', highestStreak.toString());
+    setStreak(currentStreak);
+    setHighestStreak(highestStreak);
+
+    if (streakReset) {
+      setToast({ message: 'Streak lost! Start again and beat your record!', type: 'warning' });
+    } else if (newRecord) {
+      setToast({ message: `New record! ${highestStreak}-day streak!`, type: 'success' });
+    }
+  }
+
+  useEffect(() => {
+    calculateStreak();
+  }, []);
 
   useEffect(() => {
     async function fetchCourseData() {
@@ -64,12 +148,19 @@ export default function Home() {
   };
 
   // Helper to go to next/previous lesson with transition
+  const storeLessonCompletionTimestamp = () => {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.setItem('lastActivityTimestamp', Date.now().toString());
+      calculateStreak();
+    }
+  };
   const goToNext = () => {
     if (currentStep < lessons.length - 1) {
       setIsTransitioning(true);
       setTimeout(() => {
         setCurrentStep(currentStep + 1);
         setIsTransitioning(false);
+        storeLessonCompletionTimestamp();
       }, 200);
     }
   };
@@ -79,6 +170,7 @@ export default function Home() {
       setTimeout(() => {
         setCurrentStep(currentStep - 1);
         setIsTransitioning(false);
+        storeLessonCompletionTimestamp();
       }, 200);
     }
   };
@@ -105,6 +197,83 @@ export default function Home() {
   const toggleAnswer = (i: number) => {
     setShownAnswers((prev) => ({ ...prev, [i]: !prev[i] }));
   };
+
+  // Bounce animation trigger on streak or highestStreak change
+  useEffect(() => {
+    if (streak > 0) {
+      setAnimateStreak(true);
+      const timeout = setTimeout(() => setAnimateStreak(false), 600);
+      return () => clearTimeout(timeout);
+    }
+  }, [streak, highestStreak]);
+
+  // Determine streak color
+  const getStreakColor = () => {
+    if (streak >= 7 && streak === highestStreak && highestStreak >= 7) return "bg-yellow-300 border-yellow-500 text-yellow-900 dark:bg-yellow-400 dark:border-yellow-600 dark:text-yellow-900"; // gold
+    if (streak >= 7) return "bg-green-200 border-green-500 text-green-900 dark:bg-green-400 dark:border-green-600 dark:text-green-900";
+    if (streak >= 3) return "bg-yellow-100 border-yellow-300 text-yellow-800 dark:bg-yellow-900 dark:border-yellow-700 dark:text-yellow-200";
+    if (streak >= 1) return "bg-blue-100 border-blue-300 text-blue-800 dark:bg-blue-900 dark:border-blue-700 dark:text-blue-200";
+    return "bg-gray-100 border-gray-300 text-gray-800 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-200";
+  };
+
+  useEffect(() => {
+    let msg = "";
+    if (streak === 0) {
+      const arr = motivationalMessages.zero;
+      msg = arr[Math.floor(Math.random() * arr.length)];
+    } else if (streak <= 2) {
+      const arr = motivationalMessages.low;
+      msg = arr[Math.floor(Math.random() * arr.length)];
+    } else if (streak <= 6) {
+      const arr = motivationalMessages.mid;
+      msg = arr[Math.floor(Math.random() * arr.length)];
+    } else {
+      const arr = motivationalMessages.high;
+      msg = arr[Math.floor(Math.random() * arr.length)];
+    }
+    setMotivation(msg);
+  }, [streak]);
+
+  // Update streak animation on streak events
+  useEffect(() => {
+    if (toast?.type === 'success') {
+      setStreakAnimation('streak-confetti');
+      const timeout = setTimeout(() => setStreakAnimation(''), 700);
+      return () => clearTimeout(timeout);
+    } else if (toast?.type === 'warning') {
+      setStreakAnimation('streak-shake');
+      const timeout = setTimeout(() => setStreakAnimation(''), 500);
+      return () => clearTimeout(timeout);
+    } else if (streak >= 7) {
+      setStreakAnimation('streak-glow');
+    } else {
+      setStreakAnimation('');
+    }
+  }, [toast, streak]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      if (!window.localStorage.getItem('isFirstVisit')) {
+        setShowWelcome(true);
+      }
+    }
+  }, []);
+
+  const handleCloseWelcome = () => {
+    setShowWelcome(false);
+    if (typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.setItem('isFirstVisit', 'true');
+    }
+  };
+
+  // Trigger pop animation on first visit or streak start
+  useEffect(() => {
+    if (showWelcome || streak === 1) {
+      setStreakLandingAnim('streak-pop');
+      const timeout = setTimeout(() => setStreakLandingAnim(''), 700);
+      return () => clearTimeout(timeout);
+    }
+  }, [showWelcome, streak]);
 
   if (lessons.length === 0 || courseContent.length === 0) {
     return (
@@ -190,6 +359,32 @@ export default function Home() {
         {/* Main Content */}
         <main className="flex-1 p-4 md:p-8">
           <div className="max-w-4xl mx-auto">
+            <WelcomeModal open={showWelcome} onClose={handleCloseWelcome} />
+            {toast && (
+              <Toast
+                message={toast.message}
+                type={toast.type}
+                onClose={() => setToast(null)}
+              />
+            )}
+            {/* Streak Indicator */}
+            <div
+              ref={streakRef}
+              className={`flex flex-col items-center justify-center mb-6 p-3 rounded-xl font-bold text-lg shadow-sm border transition-all duration-300 ${getStreakColor()} ${animateStreak ? 'animate-bounce' : ''} ${streakAnimation} ${streakLandingAnim}`}
+              aria-label={`Current streak: ${streak} days`}
+              tabIndex={0}
+            >
+              <div className="flex items-center">
+                <span role="img" aria-label="fire" className={`mr-2 ${animateStreak ? 'animate-bounce' : ''}`}>🔥</span>
+                <span className={animateStreak ? 'animate-bounce' : ''}>{streak > 0 ? `${streak}-day streak!` : 'Start your streak today!'}</span>
+              </div>
+              <div className="text-sm font-normal mt-1" aria-label={`Highest streak: ${highestStreak} days`}>
+                Highest streak: {highestStreak}
+              </div>
+              <div className="text-sm font-medium mt-2 text-center text-blue-700 dark:text-blue-200" aria-live="polite">
+                {motivation}
+              </div>
+            </div>
             {/* Lesson Card */}
             <div
               className={`mb-10 mt-10 bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-xl p-6 transition-all duration-300 ease-in-out ${isTransitioning ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'}`}

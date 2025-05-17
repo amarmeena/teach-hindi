@@ -1,6 +1,6 @@
 <context>
 # Overview  
-Teach Hindi is an interactive web application designed to help users learn conversational Hindi efficiently. It targets English speakers who want to acquire practical Hindi skills for travel, work, or personal enrichment. The platform offers a structured course with lessons, vocabulary, practice exercises, and audio pronunciation, making language learning engaging and accessible.
+Teach Hindi is an interactive web application designed to help users learn conversational Hindi efficiently. It targets English speakers who want to acquire practical Hindi skills for travel, work, or personal enrichment. The platform offers a structured course with lessons, vocabulary, practice exercises, and audio pronunciation, making language learning engaging and accessible. Gamification features (badges, streaks) are currently being implemented to further boost user engagement.
 
 # Core Features  
 - **Structured Hindi Course**: Sequential lessons covering greetings, introductions, numbers, daily conversation, travel, shopping, food, emergencies, business, culture, and more.
@@ -44,11 +44,11 @@ Teach Hindi is an interactive web application designed to help users learn conve
   - Vocabulary and practice questions for each lesson
   - Flashcard and quiz/practice modes
   - Audio pronunciation for vocabulary words
+  - Gamification (badges, streaks) [in progress]
   - Responsive, accessible UI with dark mode
   - Sidebar for course navigation
 - **Future Enhancements**:
   - User authentication and personalized progress tracking
-  - Gamification (badges, streaks)
   - Community features (discussion, Q&A)
   - Support for additional languages
 
