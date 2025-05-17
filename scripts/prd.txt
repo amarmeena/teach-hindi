@@ -1,6 +1,6 @@
 <context>
 # Overview  
-Teach Hindi is an interactive web application designed to help users learn conversational Hindi efficiently. It targets English speakers who want to acquire practical Hindi skills for travel, work, or personal enrichment. The platform offers a structured course with lessons, vocabulary, practice exercises, and audio pronunciation, making language learning engaging and accessible. Gamification features (badges, streaks) are currently being implemented to further boost user engagement.
+Teach Hindi is an interactive web application designed to help users learn conversational Hindi efficiently. It targets English speakers who want to acquire practical Hindi skills for travel, work, or personal enrichment. The platform offers a structured course with lessons, vocabulary, practice exercises, and audio pronunciation, making language learning engaging and accessible. **Gamification features (streaks, badges), audio pronunciation, and user authentication for progress sync are fully implemented.**
 
 # Core Features  
 - **Structured Hindi Course**: Sequential lessons covering greetings, introductions, numbers, daily conversation, travel, shopping, food, emergencies, business, culture, and more.
@@ -8,10 +8,18 @@ Teach Hindi is an interactive web application designed to help users learn conve
   - Lessons are designed to build upon each other for progressive learning.
 - **Vocabulary Flashcards**: Interactive cards for each lesson to help users memorize and review Hindi words and phrases.
   - Users can flip cards to see English/Hindi translations.
+  - **Audio pronunciation**: Each flashcard includes a speaker button that uses browser text-to-speech (TTS) for Hindi.
 - **Practice/Quiz Mode**: Practice exercises for each lesson to reinforce learning.
   - Users answer translation questions and can reveal answers for self-assessment.
 - **Course Progress Navigation**: Sidebar and navigation controls to track progress and jump between lessons.
-- **Responsive, Accessible UI**: Clean, modern interface with dark mode support and mobile-friendly design.
+- **Gamification**: 
+  - **Daily streak system**: Tracks consecutive days of activity, with motivational feedback, color/animation, and reset logic.
+  - **Badges**: (Planned) For achievements and milestones.
+- **User Authentication & Progress Sync**:
+  - Value-driven, single-line sign-in banner encourages users to sign in with Google to save progress and sync streaks across devices.
+  - Profile icon and dropdown in the header for signed-in users (with sign-out and account info).
+- **Responsive, Accessible UI**: Clean, modern interface with dark mode support, accessible controls, and mobile-friendly design.
+- **Analytics**: Vercel Analytics integration for usage tracking.
 
 # User Experience  
 - **User Personas**:
@@ -21,34 +29,44 @@ Teach Hindi is an interactive web application designed to help users learn conve
   - Language enthusiasts
 - **Key User Flows**:
   - Start at the first lesson and progress sequentially.
-  - Review vocabulary using flashcards.
+  - Review vocabulary using flashcards (with audio).
   - Switch to practice mode to test knowledge.
+  - Track streaks and progress visually.
+  - Sign in to sync progress and streaks across devices.
   - Navigate between lessons and track progress in the sidebar.
 - **UI/UX Considerations**:
-  - Simple, distraction-free layout
-  - Accessible controls for navigation and practice
-  - Visual feedback for progress and quiz mode
+  - Distraction-free layout (profile/account in header, not above quiz)
+  - Accessible, consistent button and banner styles
+  - Visual feedback for progress, streaks, and quiz mode
+  - Animations and color for motivation
+  - All features work in both light and dark mode
 
 </context>
 <PRD>
 # Technical Architecture  
 - **Frontend**: Next.js (React), TypeScript, Tailwind CSS for styling
 - **Content**: Lessons and vocabulary stored in JSON files
-- **State Management**: React hooks for lesson state, progress, and UI modes
+- **State Management**: React hooks for lesson state, progress, UI modes, and streaks
+- **Authentication**: Google sign-in (NextAuth or similar), profile dropdown in header
+- **Audio**: Browser SpeechSynthesis API for Hindi TTS
+- **Analytics**: Vercel Analytics integration
 - **No backend required** for MVP; all content is static and client-side
-- **Potential Integrations**: Future support for user accounts, progress tracking, or spaced repetition algorithms
+- **Potential Integrations**: Future support for spaced repetition, badges, or community features
 
 # Development Roadmap  
 - **MVP Requirements**:
   - Course structure with at least 10-15 lessons
   - Vocabulary and practice questions for each lesson
   - Flashcard and quiz/practice modes
-  - Audio pronunciation for vocabulary words
-  - Gamification (badges, streaks) [in progress]
+  - Audio pronunciation for vocabulary words (browser TTS)
+  - Gamification (streaks fully implemented, badges planned)
   - Responsive, accessible UI with dark mode
   - Sidebar for course navigation
+  - Value-driven sign-in banner and Google authentication
+  - Profile/account dropdown in header
+  - Vercel Analytics
 - **Future Enhancements**:
-  - User authentication and personalized progress tracking
+  - Achievement badges and advanced gamification
   - Community features (discussion, Q&A)
   - Support for additional languages
 
@@ -56,18 +74,19 @@ Teach Hindi is an interactive web application designed to help users learn conve
 - Build static content structure (JSON for lessons)
 - Implement lesson navigation and state management
 - Add vocabulary flashcards and practice mode
-- Integrate UI/UX features (sidebar, dark mode, responsive design)
+- Integrate UI/UX features (sidebar, dark mode, responsive design, sign-in, streaks)
+- Add audio pronunciation and analytics
 - Expand content and add enhancements as needed
 
 # Risks and Mitigations  
 - **Content completeness**: Ensure enough lessons and vocabulary for a meaningful MVP
   - Mitigation: Start with core conversational topics, expand iteratively
 - **User engagement**: Risk of users dropping off without interactive features
-  - Mitigation: Add practice/quiz mode and visual progress tracking early
+  - Mitigation: Add practice/quiz mode, streaks, and visual progress tracking early
 - **Scalability**: Static content may limit future features
   - Mitigation: Design architecture to allow easy migration to dynamic content or backend
 
 # Appendix  
-- **Research findings**: Most language learners benefit from spaced repetition, interactive practice, and immediate feedback
-- **Technical specifications**: Next.js 13+, TypeScript, Tailwind CSS, React hooks, JSON content files
+- **Research findings**: Most language learners benefit from spaced repetition, interactive practice, immediate feedback, and motivational gamification
+- **Technical specifications**: Next.js 13+, TypeScript, Tailwind CSS, React hooks, JSON content files, browser TTS, NextAuth, Vercel Analytics
 </PRD> 

@@ -2,12 +2,13 @@
 import * as React from "react";
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { FiXCircle, FiArrowLeft, FiArrowRight, FiVolume2 } from "react-icons/fi";
+import { FiXCircle, FiArrowLeft, FiArrowRight, FiVolume2, FiUser } from "react-icons/fi";
 import { MdSportsEsports } from "react-icons/md";
 import ThemeToggle from "@/components/ThemeToggle";
 import { Toast } from "@/components/ui/Toast";
 import { WelcomeModal } from "@/components/ui/WelcomeModal";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { SignInBanner } from "@/components/SignInBanner";
 
 // Define a placeholder PracticeItem type for now
 interface PracticeItem {
@@ -50,6 +51,8 @@ export default function Home() {
   const [streakLandingAnim, setStreakLandingAnim] = useState("");
   const [practiceMode, setPracticeMode] = useState(false);
   const { data: session } = useSession();
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const profileMenuRef = useRef<HTMLDivElement>(null);
 
   const motivationalMessages = {
     zero: [
@@ -262,6 +265,21 @@ export default function Home() {
     }
   }, [showWelcome, streak]);
 
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target as Node)) {
+        setProfileMenuOpen(false);
+      }
+    }
+    if (profileMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [profileMenuOpen]);
+
   if (lessons.length === 0 || courseContent.length === 0) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white dark:bg-black">
@@ -272,7 +290,7 @@ export default function Home() {
 
   return (
     <>
-      {/* Mobile Top Bar: Sidebar + Dark Mode Toggle */}
+      {/* Mobile Top Bar: Sidebar + Dark Mode Toggle + Profile */}
       <header className="w-full bg-white dark:bg-black text-black dark:text-white border-b border-gray-200 dark:border-gray-800">
         <div className="w-full flex items-center justify-between px-4 py-4">
           {/* Sidebar Toggle */}
@@ -288,8 +306,41 @@ export default function Home() {
             </svg>
             <span className="sr-only">Open course progress sidebar</span>
           </button>
-          {/* Dark Mode Toggle */}
-          <ThemeToggle className="w-11 h-11" />
+          <div className="flex items-center gap-4">
+            <ThemeToggle className="w-11 h-11" />
+            {/* Profile Icon & Dropdown */}
+            {session && session.user && (
+              <div className="relative" ref={profileMenuRef}>
+                <button
+                  className="w-11 h-11 rounded-full flex items-center justify-center border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  onClick={() => setProfileMenuOpen((v) => !v)}
+                  aria-label="Open profile menu"
+                >
+                  {session.user.image ? (
+                    <img src={session.user.image} alt="Profile" className="w-9 h-9 rounded-full object-cover" />
+                  ) : session.user.name ? (
+                    <span className="font-bold text-lg">{session.user.name.split(' ').map(n => n[0]).join('').slice(0,2)}</span>
+                  ) : (
+                    <FiUser className="w-7 h-7" />
+                  )}
+                </button>
+                {profileMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg z-50 animate-fade-in">
+                    <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-800">
+                      <div className="font-semibold text-gray-900 dark:text-white">{session.user.name || session.user.email}</div>
+                      {session.user.email && <div className="text-sm text-gray-500 dark:text-gray-300">{session.user.email}</div>}
+                    </div>
+                    <button
+                      className="w-full text-left px-4 py-3 text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-b-xl font-semibold"
+                      onClick={() => { setProfileMenuOpen(false); signOut(); }}
+                    >
+                      Sign out
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </header>
       <div className="min-h-screen flex bg-white dark:bg-black font-sans">
@@ -348,15 +399,10 @@ export default function Home() {
           <div className="max-w-4xl mx-auto">
             {/* Auth UI */}
             <div className="mb-6 flex items-center gap-4">
-              {session ? (
-                <>
-                  <span className="font-semibold">Welcome, {session.user?.name || session.user?.email}</span>
-                  <button className="app-btn px-4 py-2 rounded" onClick={() => signOut()}>Sign out</button>
-                </>
-              ) : (
-                <button className="app-btn px-4 py-2 rounded" onClick={() => signIn("google")}>Sign in with Google</button>
-              )}
+              {/* Removed user status from here for focus */}
             </div>
+            <SignInBanner onSignIn={() => signIn("google")}
+                          user={session?.user} />
             <WelcomeModal open={showWelcome} onClose={handleCloseWelcome} />
             {toast && (
               <Toast
