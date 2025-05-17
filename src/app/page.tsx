@@ -432,21 +432,30 @@ export default function Home() {
                   <p className="mb-6 text-gray-700 dark:text-gray-200 text-base">
                     Sign in to <span className="font-semibold text-blue-700 dark:text-blue-300">save progress</span> and <span className="font-semibold text-blue-700 dark:text-blue-300">sync across devices</span>.
                   </p>
-                  <Button
-                    onClick={() => { handleCloseSignInModal(); signIn('google'); }}
-                    variant="secondary"
-                    size="lg"
-                    className="mb-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow transition-colors px-6 py-2"
-                  >
-                    <svg width="20" height="20" viewBox="0 0 48 48" className="inline-block mr-2 align-middle"><g><path fill="#4285F4" d="M24 9.5c3.54 0 6.7 1.22 9.2 3.22l6.86-6.86C36.68 2.7 30.7 0 24 0 14.82 0 6.73 5.4 2.69 13.32l7.98 6.2C12.2 13.1 17.62 9.5 24 9.5z"/><path fill="#34A853" d="M46.1 24.55c0-1.64-.15-3.22-.42-4.74H24v9.02h12.42c-.54 2.9-2.18 5.36-4.66 7.02l7.2 5.6C43.98 37.1 46.1 31.3 46.1 24.55z"/><path fill="#FBBC05" d="M10.67 28.08a14.5 14.5 0 0 1 0-8.16l-7.98-6.2A23.97 23.97 0 0 0 0 24c0 3.82.92 7.44 2.69 10.68l7.98-6.2z"/><path fill="#EA4335" d="M24 48c6.48 0 11.92-2.14 15.89-5.82l-7.2-5.6c-2.01 1.36-4.6 2.18-8.69 2.18-6.38 0-11.8-3.6-13.33-8.58l-7.98 6.2C6.73 42.6 14.82 48 24 48z"/></g></svg>
-                    Sign in with Google
-                  </Button>
-                  <button
-                    onClick={handleCloseSignInModal}
-                    className="mt-2 px-6 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-blue-900 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-blue-200 font-semibold shadow focus:outline-none focus:ring-2 focus:ring-blue-400 transition-colors"
-                  >
-                    Maybe later
-                  </button>
+                  <div className="flex flex-col justify-center items-center gap-4 w-full mt-2">
+                    <Button
+                      onClick={() => { handleCloseSignInModal(); signIn('google'); }}
+                      variant="secondary"
+                      size="lg"
+                      className="rounded-full flex items-center justify-center min-w-[180px] md:w-44 bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow transition-colors px-6 py-2 whitespace-nowrap"
+                    >
+                      <svg width="20" height="20" viewBox="0 0 48 48" className="inline-block mr-2 align-middle">
+                        <g>
+                          <path fill="#4285F4" d="M24 9.5c3.54 0 6.7 1.22 9.2 3.22l6.86-6.86C36.68 2.7 30.7 0 24 0 14.82 0 6.73 5.4 2.69 13.32l7.98 6.2C12.2 13.1 17.62 9.5 24 9.5z"/>
+                          <path fill="#34A853" d="M46.1 24.55c0-1.64-.15-3.22-.42-4.74H24v9.02h12.42c-.54 2.9-2.18 5.36-4.66 7.02l7.2 5.6C43.98 37.1 46.1 31.3 46.1 24.55z"/>
+                          <path fill="#FBBC05" d="M10.67 28.08a14.5 14.5 0 0 1 0-8.16l-7.98-6.2A23.97 23.97 0 0 0 0 24c0 3.82.92 7.44 2.69 10.68l7.98-6.2z"/>
+                          <path fill="#EA4335" d="M24 48c6.48 0 11.92-2.14 15.89-5.82l-7.2-5.6c-2.01 1.36-4.6 2.18-8.69 2.18-6.38 0-11.8-3.6-13.33-8.58l-7.98 6.2C6.73 42.6 14.82 48 24 48z"/>
+                        </g>
+                      </svg>
+                      Sign in with Google
+                    </Button>
+                    <button
+                      onClick={handleCloseSignInModal}
+                      className="rounded-full flex items-center justify-center min-w-[120px] md:w-44 px-6 py-2 bg-gray-100 hover:bg-gray-200 text-blue-900 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-blue-200 font-semibold shadow focus:outline-none focus:ring-2 focus:ring-blue-400 transition-colors"
+                    >
+                      Maybe later
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
