@@ -1,0 +1,73 @@
+<context>
+# Overview  
+Teach Hindi is an interactive web application designed to help users learn conversational Hindi efficiently. It targets English speakers who want to acquire practical Hindi skills for travel, work, or personal enrichment. The platform offers a structured course with lessons, vocabulary, and practice exercises, making language learning engaging and accessible.
+
+# Core Features  
+- **Structured Hindi Course**: Sequential lessons covering greetings, introductions, numbers, daily conversation, travel, shopping, food, emergencies, business, culture, and more.
+  - Each lesson includes essential vocabulary and practice questions.
+  - Lessons are designed to build upon each other for progressive learning.
+- **Vocabulary Flashcards**: Interactive cards for each lesson to help users memorize and review Hindi words and phrases.
+  - Users can flip cards to see English/Hindi translations.
+- **Practice/Quiz Mode**: Practice exercises for each lesson to reinforce learning.
+  - Users answer translation questions and can reveal answers for self-assessment.
+- **Course Progress Navigation**: Sidebar and navigation controls to track progress and jump between lessons.
+- **Responsive, Accessible UI**: Clean, modern interface with dark mode support and mobile-friendly design.
+
+# User Experience  
+- **User Personas**:
+  - Travelers to India
+  - Heritage learners
+  - Business professionals
+  - Language enthusiasts
+- **Key User Flows**:
+  - Start at the first lesson and progress sequentially.
+  - Review vocabulary using flashcards.
+  - Switch to practice mode to test knowledge.
+  - Navigate between lessons and track progress in the sidebar.
+- **UI/UX Considerations**:
+  - Simple, distraction-free layout
+  - Accessible controls for navigation and practice
+  - Visual feedback for progress and quiz mode
+
+</context>
+<PRD>
+# Technical Architecture  
+- **Frontend**: Next.js (React), TypeScript, Tailwind CSS for styling
+- **Content**: Lessons and vocabulary stored in JSON files
+- **State Management**: React hooks for lesson state, progress, and UI modes
+- **No backend required** for MVP; all content is static and client-side
+- **Potential Integrations**: Future support for user accounts, progress tracking, or spaced repetition algorithms
+
+# Development Roadmap  
+- **MVP Requirements**:
+  - Course structure with at least 10-15 lessons
+  - Vocabulary and practice questions for each lesson
+  - Flashcard and quiz/practice modes
+  - Responsive, accessible UI with dark mode
+  - Sidebar for course navigation
+- **Future Enhancements**:
+  - User authentication and personalized progress tracking
+  - Audio pronunciation for vocabulary
+  - Gamification (badges, streaks)
+  - Community features (discussion, Q&A)
+  - Support for additional languages
+
+# Logical Dependency Chain
+- Build static content structure (JSON for lessons)
+- Implement lesson navigation and state management
+- Add vocabulary flashcards and practice mode
+- Integrate UI/UX features (sidebar, dark mode, responsive design)
+- Expand content and add enhancements as needed
+
+# Risks and Mitigations  
+- **Content completeness**: Ensure enough lessons and vocabulary for a meaningful MVP
+  - Mitigation: Start with core conversational topics, expand iteratively
+- **User engagement**: Risk of users dropping off without interactive features
+  - Mitigation: Add practice/quiz mode and visual progress tracking early
+- **Scalability**: Static content may limit future features
+  - Mitigation: Design architecture to allow easy migration to dynamic content or backend
+
+# Appendix  
+- **Research findings**: Most language learners benefit from spaced repetition, interactive practice, and immediate feedback
+- **Technical specifications**: Next.js 13+, TypeScript, Tailwind CSS, React hooks, JSON content files
+</PRD> 
