@@ -426,11 +426,8 @@ export default function Home() {
             {showSignInModal && (
               <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 font-sans antialiased">
                 <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-6 max-w-md w-full flex flex-col items-center text-center border border-blue-200 dark:border-blue-700">
-                  {/* Clean SVG lock icon */}
-                  <svg className="w-12 h-12 mb-3 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <rect x="5" y="11" width="14" height="8" rx="3" fill="currentColor" className="text-blue-100 dark:text-blue-900"/>
-                    <path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  {/* Trophy icon for sign-in encouragement */}
+                  <span className="text-5xl mb-3" role="img" aria-label="Trophy" style={{ color: '#FBBF24' }}>🏆</span>
                   <h2 className="text-xl font-bold mb-2 text-blue-900 dark:text-blue-100">Don't lose your streak!</h2>
                   <p className="mb-6 text-gray-700 dark:text-gray-200 text-base">
                     Sign in to <span className="font-semibold text-blue-700 dark:text-blue-300">save progress</span> and <span className="font-semibold text-blue-700 dark:text-blue-300">sync across devices</span>.
