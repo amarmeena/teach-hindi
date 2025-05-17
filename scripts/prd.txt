@@ -69,6 +69,9 @@ Teach Hindi is an interactive web application designed to help users learn conve
   - Achievement badges and advanced gamification
   - Community features (discussion, Q&A)
   - Support for additional languages
+  - Spaced repetition (Anki algorithm) for vocabulary/practice review scheduling
+  - UI for review queue, next review time, and spaced repetition feedback
+  - Integration with user authentication and progress sync
 
 # Logical Dependency Chain
 - Build static content structure (JSON for lessons)
