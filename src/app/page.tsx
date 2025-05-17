@@ -17,16 +17,35 @@ interface PracticeItem {
 }
 
 // Define types for course content
-interface LessonContent {
-  content: [string, string][];
-  // Remove vocabulary and practice for now, as they are not present in course.json
+type LessonContent = {
+  content: [string, string, string][];
+};
+
+function isIOS() {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') return false;
+  // Use (window as any).MSStream to avoid TypeScript error
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
 }
 
-function playHindiAudio(text: string) {
+function playHindiAudio(text: string, showToast?: (msg: string) => void) {
   if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+    const synth = window.speechSynthesis;
+    let voices = synth.getVoices();
+    if (!voices.length) {
+      synth.onvoiceschanged = () => playHindiAudio(text, showToast);
+      return;
+    }
+    // Always use the first Hindi voice if available
+    const hindiVoices = voices.filter(v => v.lang && v.lang.toLowerCase().startsWith('hi'));
+    const hindiVoice = hindiVoices.length > 0 ? hindiVoices[0] : undefined;
     const utterance = new window.SpeechSynthesisUtterance(text);
     utterance.lang = 'hi-IN';
-    window.speechSynthesis.speak(utterance);
+    if (hindiVoice) {
+      utterance.voice = hindiVoice;
+    } else if (isIOS() && showToast) {
+      showToast('For better Hindi pronunciation, please install a Hindi voice in iOS Settings > Accessibility > Spoken Content > Voices > Hindi.');
+    }
+    synth.speak(utterance);
   }
 }
 
@@ -130,10 +149,14 @@ export default function Home() {
     async function fetchCourseData() {
       const data = await import("../content/course.json");
       setLessons(data.default.lessons);
-      // Transform content to [string, string][]
+      // Transform content to [string, string, string][]
       const fixedContent = data.default.courseContent.map((lesson: any) => ({
         ...lesson,
-        content: lesson.content.map((entry: any) => [entry[0] ?? "", entry[1] ?? ""] as [string, string]),
+        content: lesson.content.map((entry: any) => {
+          if (entry.length === 3) return [entry[0] ?? '', entry[1] ?? '', entry[2] ?? ''] as [string, string, string];
+          if (entry.length === 2) return ['', entry[0] ?? '', entry[1] ?? ''] as [string, string, string]; // fallback for old data
+          return ['', '', ''];
+        }),
       }));
       setCourseContent(fixedContent);
     }
@@ -496,7 +519,7 @@ export default function Home() {
               <div className="mb-6">
                 {practiceMode ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {courseContent[currentStep].content.map(([hindi, english]: [string, string], i: number) => (
+                    {courseContent[currentStep].content.map(([devanagari, translit, english]: [string, string, string], i: number) => (
                       <div
                         key={i}
                         className={`relative cursor-pointer select-none rounded-xl border border-gray-200 dark:border-gray-700 transition-all duration-300 py-2 px-3 flex items-center justify-center min-h-[36px] text-base
@@ -504,35 +527,52 @@ export default function Home() {
                         onClick={() => setFlipped(f => ({ ...f, [i]: !f[i] }))}
                         tabIndex={0}
                         onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setFlipped(f => ({ ...f, [i]: !f[i] })); }}
-                        aria-label={flipped[i] ? english : hindi}
+                        aria-label={flipped[i] ? english : translit}
                       >
                         <span className="font-semibold text-black dark:text-white transition-all duration-300 text-center w-full flex items-center justify-center gap-2">
-                          {flipped[i] ? english : hindi}
-                          <button
-                            type="button"
-                            tabIndex={0}
-                            aria-label={`Pronounce ${flipped[i] ? english : hindi}`}
-                            className="p-1 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 self-start mt-1"
-                            onClick={e => { e.stopPropagation(); playHindiAudio(flipped[i] ? english : hindi); }}
-                          >
-                            <FiVolume2 className="w-5 h-5 text-gray-700 dark:text-gray-200" />
-                          </button>
+                          {flipped[i] ? (
+                            <>
+                              {english}
+                              <button
+                                type="button"
+                                tabIndex={0}
+                                aria-label={`Pronounce ${devanagari || translit || english}`}
+                                className="p-1 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 self-start mt-1"
+                                onClick={e => { e.stopPropagation(); playHindiAudio(devanagari || translit || english, (msg) => setToast({ message: msg, type: 'warning' })); }}
+                              >
+                                <FiVolume2 className="w-5 h-5 text-gray-700 dark:text-gray-200" />
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              {translit}
+                              <button
+                                type="button"
+                                tabIndex={0}
+                                aria-label={`Pronounce ${devanagari || translit || english}`}
+                                className="p-1 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 self-start mt-1"
+                                onClick={e => { e.stopPropagation(); playHindiAudio(devanagari || translit || english, (msg) => setToast({ message: msg, type: 'warning' })); }}
+                              >
+                                <FiVolume2 className="w-5 h-5 text-gray-700 dark:text-gray-200" />
+                              </button>
+                            </>
+                          )}
                         </span>
                       </div>
                     ))}
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {courseContent[currentStep].content.map(([hindi, english]: [string, string], i: number) => (
+                    {courseContent[currentStep].content.map(([devanagari, translit, english]: [string, string, string], i: number) => (
                       <div key={i} className="flex items-center justify-between p-3 bg-gray-100 text-black border border-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-700 rounded-xl">
                         <span className="font-medium text-base text-left flex-1 flex items-center gap-2">
-                          {hindi}
+                          {translit}
                           <button
                             type="button"
                             tabIndex={0}
-                            aria-label={`Pronounce ${hindi}`}
+                            aria-label={`Pronounce ${devanagari || translit || english}`}
                             className="p-1 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 self-start mt-1"
-                            onClick={() => playHindiAudio(hindi)}
+                            onClick={() => playHindiAudio(devanagari || translit || english, (msg) => setToast({ message: msg, type: 'warning' }))}
                           >
                             <FiVolume2 className="w-5 h-5 text-gray-700 dark:text-gray-200" />
                           </button>

@@ -19,140 +19,140 @@
   "courseContent": [
     {
       "content": [
-        ["Namaste", "Hello"],
-        ["Shukriya", "Thank you"],
-        ["Aap kaise hain?", "How are you?"],
-        ["Main theek hoon", "I'm fine"],
-        ["Kya haal hai?", "How are things?"],
-        ["Milke accha laga", "Nice to meet you"]
+        ["मिलके अच्छा लगा", "Milke accha laga", "Nice to meet you"],
+        ["नमस्ते", "Namaste", "Hello"],
+        ["शुक्रिया", "Shukriya", "Thank you"],
+        ["आप कैसे हैं?", "Aap kaise hain?", "How are you?"],
+        ["मैं ठीक हूँ", "Main theek hoon", "I'm fine"],
+        ["क्या हाल है?", "Kya haal hai?", "How are things?"]
       ]
     },
     {
       "content": [
-        ["Mera naam Ravi hai", "My name is Ravi"],
-        ["Aapka naam kya hai?", "What is your name?"],
-        ["Main student hoon", "I am a student"],
-        ["Aap kahan se hain?", "Where are you from?"],
-        ["Main Dilli se hoon", "I am from Delhi"]
+        ["मेरा नाम रवि है", "Mera naam Ravi hai", "My name is Ravi"],
+        ["आपका नाम क्या है?", "Aapka naam kya hai?", "What is your name?"],
+        ["मैं छात्र हूँ", "Main student hoon", "I am a student"],
+        ["आप कहाँ से हैं?", "Aap kahan se hain?", "Where are you from?"],
+        ["मैं दिल्ली से हूँ", "Main Dilli se hoon", "I am from Delhi"]
       ]
     },
     {
       "content": [
-        ["Ek", "One"],
-        ["Do", "Two"],
-        ["Teen", "Three"],
-        ["Das", "Ten"],
-        ["Sau", "Hundred"],
-        ["Hazaar", "Thousand"]
+        ["एक", "Ek", "One"],
+        ["दो", "Do", "Two"],
+        ["तीन", "Teen", "Three"],
+        ["दस", "Das", "Ten"],
+        ["सौ", "Sau", "Hundred"],
+        ["हज़ार", "Hazaar", "Thousand"]
       ]
     },
     {
       "content": [
-        ["Aap kya kar rahe hain?", "What are you doing?"],
-        ["Sab theek hai", "Everything is fine"],
-        ["Thoda busy hoon", "I am a bit busy"],
-        ["Phir milenge", "See you again"],
-        ["Koi baat nahi", "No problem"]
+        ["आप क्या कर रहे हैं?", "Aap kya kar rahe hain?", "What are you doing?"],
+        ["सब ठीक है", "Sab theek hai", "Everything is fine"],
+        ["थोड़ा व्यस्त हूँ", "Thoda busy hoon", "I am a bit busy"],
+        ["फिर मिलेंगे", "Phir milenge", "See you again"],
+        ["कोई बात नहीं", "Koi baat nahi", "No problem"]
       ]
     },
     {
       "content": [
-        ["Yeh kahan hai?", "Where is this?"],
-        ["Seedha jaiye", "Go straight"],
-        ["Daiyen mud jaiye", "Turn right"],
-        ["Baayen mud jaiye", "Turn left"],
-        ["Kitni door hai?", "How far is it?"],
-        ["Auto milega?", "Will I get an auto?"]
+        ["यह कहाँ है?", "Yeh kahan hai?", "Where is this?"],
+        ["सीधा जाइए", "Seedha jaiye", "Go straight"],
+        ["दाएँ मुड़ जाइए", "Daiyen mud jaiye", "Turn right"],
+        ["बाएँ मुड़ जाइए", "Baayen mud jaiye", "Turn left"],
+        ["कितनी दूर है?", "Kitni door hai?", "How far is it?"],
+        ["ऑटो मिलेगा?", "Auto milega?", "Will I get an auto?"]
       ]
     },
     {
       "content": [
-        ["Yeh kitne ka hai?", "How much is this?"],
-        ["Sasta hai kya?", "Is it cheap?"],
-        ["Mujhe yeh chahiye", "I want this"],
-        ["Badla hai?", "Do you have change?"],
-        ["Card chalega?", "Will card work?"]
+        ["यह कितने का है?", "Yeh kitne ka hai?", "How much is this?"],
+        ["सस्ता है क्या?", "Sasta hai kya?", "Is it cheap?"],
+        ["मुझे यह चाहिए", "Mujhe yeh chahiye", "I want this"],
+        ["बदल है?", "Badla hai?", "Do you have change?"],
+        ["कार्ड चलेगा?", "Card chalega?", "Will card work?"]
       ]
     },
     {
       "content": [
-        ["Khaana", "Food"],
-        ["Paani", "Water"],
-        ["Menu dikhaiye", "Show me the menu"],
-        ["Bill le aaiye", "Bring the bill"],
-        ["Zyada teekha mat banaaiye", "Don't make it too spicy"]
+        ["खाना", "Khaana", "Food"],
+        ["पानी", "Paani", "Water"],
+        ["मेनू दिखाइए", "Menu dikhaiye", "Show me the menu"],
+        ["बिल ले आइए", "Bill le aaiye", "Bring the bill"],
+        ["ज़्यादा तीखा मत बनाइए", "Zyada teekha mat banaaiye", "Don't make it too spicy"]
       ]
     },
     {
       "content": [
-        ["Madad kijiye!", "Help!"],
-        ["Doctor bulaaiye", "Call a doctor"],
-        ["Mujhe chot lag gayi hai", "I am hurt"],
-        ["Dawai kahan milegi?", "Where can I get medicine?"],
-        ["Ambulance bulaaiye", "Call an ambulance"]
+        ["मदद कीजिए!", "Madad kijiye!", "Help!"],
+        ["डॉक्टर बुलाइए", "Doctor bulaaiye", "Call a doctor"],
+        ["मुझे चोट लग गई है", "Mujhe chot lag gayi hai", "I am hurt"],
+        ["दवाई कहाँ मिलेगी?", "Dawai kahan milegi?", "Where can I get medicine?"],
+        ["एम्बुलेंस बुलाइए", "Ambulance bulaaiye", "Call an ambulance"]
       ]
     },
     {
       "content": [
-        ["Kal mil sakte hain?", "Can we meet tomorrow?"],
-        ["Kitne baje?", "What time?"],
-        ["Mujhe der ho rahi hai", "I am getting late"],
-        ["Aap free hain?", "Are you free?"],
-        ["Aap kal free hain?", "Are you free tomorrow?"]
+        ["कल मिल सकते हैं?", "Kal mil sakte hain?", "Can we meet tomorrow?"],
+        ["कितने बजे?", "Kitne baje?", "What time?"],
+        ["मुझे देर हो रही है", "Mujhe der ho rahi hai", "I am getting late"],
+        ["आप फ्री हैं?", "Aap free hain?", "Are you free?"],
+        ["आप कल फ्री हैं?", "Aap kal free hain?", "Are you free tomorrow?"]
       ]
     },
     {
       "content": [
-        ["Message bhejiye", "Send a message"],
-        ["Call kijiye", "Call me"],
-        ["Photo bhejiye", "Send a photo"],
-        ["Aap online hain?", "Are you online?"],
-        ["Reply kijiye", "Reply"]
+        ["संदेश भेजिए", "Message bhejiye", "Send a message"],
+        ["कॉल कीजिए", "Call kijiye", "Call me"],
+        ["फोटो भेजिए", "Photo bhejiye", "Send a photo"],
+        ["आप ऑनलाइन हैं?", "Aap online hain?", "Are you online?"],
+        ["जवाब दीजिए", "Reply kijiye", "Reply"]
       ]
     },
     {
       "content": [
-        ["Meeting kab hai?", "When is the meeting?"],
-        ["Kaam ho gaya?", "Is the work done?"],
-        ["Email bhejiye", "Send an email"],
-        ["Presentation deni hai", "I have to give a presentation"],
-        ["Client se baat hui?", "Did you talk to the client?"]
+        ["मीटिंग कब है?", "Meeting kab hai?", "When is the meeting?"],
+        ["काम हो गया?", "Kaam ho gaya?", "Is the work done?"],
+        ["ईमेल भेजिए", "Email bhejiye", "Send an email"],
+        ["प्रेजेंटेशन देनी है", "Presentation deni hai", "I have to give a presentation"],
+        ["क्लाइंट से बात हुई?", "Client se baat hui?", "Did you talk to the client?"]
       ]
     },
     {
       "content": [
-        ["Bahut accha", "Very good"],
-        ["Chaliye", "Let's go"],
-        ["Bakwas mat kijiye", "Don't talk nonsense"],
-        ["Jugad", "Workaround"],
-        ["Sab mast hai", "Everything is great"]
+        ["बहुत अच्छा", "Bahut accha", "Very good"],
+        ["चलिए", "Chaliye", "Let's go"],
+        ["बकवास मत कीजिए", "Bakwas mat kijiye", "Don't talk nonsense"],
+        ["जुगाड़", "Jugad", "Workaround"],
+        ["सब मस्त है", "Sab mast hai", "Everything is great"]
       ]
     },
     {
       "content": [
-        ["Mujhe lagta hai", "I think"],
-        ["Mujhe nahi lagta", "I don't think so"],
-        ["Aapka kya vichar hai?", "What's your opinion?"],
-        ["Main sehmat hoon", "I agree"],
-        ["Main asahmat hoon", "I disagree"]
+        ["मुझे लगता है", "Mujhe lagta hai", "I think"],
+        ["मुझे नहीं लगता", "Mujhe nahi lagta", "I don't think so"],
+        ["आपका क्या विचार है?", "Aapka kya vichar hai?", "What's your opinion?"],
+        ["मैं सहमत हूँ", "Main sehmat hoon", "I agree"],
+        ["मैं असहमत हूँ", "Main asahmat hoon", "I disagree"]
       ]
     },
     {
       "content": [
-        ["Ek baar ki baat hai", "Once upon a time"],
-        ["Phir kya hua?", "Then what happened?"],
-        ["Kahani sunaiye", "Tell a story"],
-        ["Ant mein", "In the end"],
-        ["Seekh kya mili?", "What did you learn?"]
+        ["एक बार की बात है", "Ek baar ki baat hai", "Once upon a time"],
+        ["फिर क्या हुआ?", "Phir kya hua?", "Then what happened?"],
+        ["कहानी सुनाइए", "Kahani sunaiye", "Tell a story"],
+        ["अंत में", "Ant mein", "In the end"],
+        ["सीख क्या मिली?", "Seekh kya mili?", "What did you learn?"]
       ]
     },
     {
       "content": [
-        ["Kripya", "Please (formal)"],
-        ["Dhanyavaad", "Thank you (formal)"],
-        ["Aapka samay dene ke liye dhanyavaad", "Thank you for your time"],
-        ["Aap se milkar accha laga", "Nice to meet you"],
-        ["Sampark mein rahiye", "Stay in touch"]
+        ["कृपया", "Kripya", "Please (formal)"],
+        ["धन्यवाद", "Dhanyavaad", "Thank you (formal)"],
+        ["आपका समय देने के लिए धन्यवाद", "Aapka samay dene ke liye dhanyavaad", "Thank you for your time"],
+        ["आपसे मिलकर अच्छा लगा", "Aap se milkar accha laga", "Nice to meet you"],
+        ["संपर्क में रहिए", "Sampark mein rahiye", "Stay in touch"]
       ]
     }
   ]

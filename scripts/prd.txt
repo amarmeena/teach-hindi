@@ -8,7 +8,7 @@ Teach Hindi is an interactive web application designed to help users learn conve
   - Lessons are designed to build upon each other for progressive learning.
 - **Vocabulary Flashcards**: Interactive cards for each lesson to help users memorize and review Hindi words and phrases.
   - Users can flip cards to see English/Hindi translations.
-  - **Audio pronunciation**: Each flashcard includes a speaker button that uses browser text-to-speech (TTS) for Hindi.
+  - **Audio pronunciation**: Each flashcard includes a speaker button that uses browser text-to-speech (TTS) for Hindi. **The UI displays only the Latin (transliteration) text for Hindi, while the audio uses the Devanagari (Hindi script) text for accurate pronunciation.**
 - **Practice/Quiz Mode**: Practice exercises for each lesson to reinforce learning.
   - Users answer translation questions and can reveal answers for self-assessment.
 - **Course Progress Navigation**: Sidebar and navigation controls to track progress and jump between lessons.
@@ -45,10 +45,10 @@ Teach Hindi is an interactive web application designed to help users learn conve
 <PRD>
 # Technical Architecture  
 - **Frontend**: Next.js (React), TypeScript, Tailwind CSS for styling
-- **Content**: Lessons and vocabulary stored in JSON files
+- **Content**: Lessons and vocabulary stored in JSON files. **Each phrase includes Devanagari (Hindi script), transliteration (Latin script), and English meaning. The UI displays the transliteration, while TTS uses the Devanagari script for audio.**
 - **State Management**: React hooks for lesson state, progress, UI modes, and streaks
 - **Authentication**: Google sign-in (NextAuth or similar), profile dropdown in header
-- **Audio**: Browser SpeechSynthesis API for Hindi TTS
+- **Audio**: Browser SpeechSynthesis API for Hindi TTS (uses Devanagari script for best pronunciation)
 - **Analytics**: Vercel Analytics integration
 - **No backend required** for MVP; all content is static and client-side
 - **Potential Integrations**: Future support for spaced repetition, badges, or community features
@@ -58,7 +58,7 @@ Teach Hindi is an interactive web application designed to help users learn conve
   - Course structure with at least 10-15 lessons
   - Vocabulary and practice questions for each lesson
   - Flashcard and quiz/practice modes
-  - Audio pronunciation for vocabulary words (browser TTS)
+  - Audio pronunciation for vocabulary words (browser TTS, **UI shows transliteration, TTS uses Devanagari**)
   - Gamification (streaks fully implemented, badges planned)
   - Responsive, accessible UI with dark mode
   - Sidebar for course navigation
