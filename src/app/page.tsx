@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { FiXCircle, FiArrowLeft, FiArrowRight } from "react-icons/fi";
+import { FiXCircle, FiArrowLeft, FiArrowRight, FiVolume2 } from "react-icons/fi";
 import { MdSportsEsports } from "react-icons/md";
 import ThemeToggle from "@/components/ThemeToggle";
 
@@ -14,6 +14,14 @@ interface PracticeItem {
 interface LessonContent {
   vocabulary: [string, string][];
   practice: PracticeItem[];
+}
+
+function playHindiAudio(text: string) {
+  if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+    const utterance = new window.SpeechSynthesisUtterance(text);
+    utterance.lang = 'hi-IN';
+    window.speechSynthesis.speak(utterance);
+  }
 }
 
 export default function Home() {
@@ -205,8 +213,17 @@ export default function Home() {
                         onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setFlipped(f => ({ ...f, [i]: !f[i] })); }}
                         aria-label={flipped[i] ? english : hindi}
                       >
-                        <span className="font-semibold text-black dark:text-white transition-all duration-300 text-center w-full">
+                        <span className="font-semibold text-black dark:text-white transition-all duration-300 text-center w-full flex items-center justify-center gap-2">
                           {flipped[i] ? english : hindi}
+                          <button
+                            type="button"
+                            tabIndex={0}
+                            aria-label={`Pronounce ${flipped[i] ? english : hindi}`}
+                            className="ml-2 p-1 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            onClick={e => { e.stopPropagation(); playHindiAudio(flipped[i] ? english : hindi); }}
+                          >
+                            <FiVolume2 className="w-5 h-5 text-gray-700 dark:text-gray-200" />
+                          </button>
                         </span>
                       </div>
                     ))}
@@ -215,7 +232,18 @@ export default function Home() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {courseContent[currentStep].vocabulary.map(([hindi, english]: [string, string], i: number) => (
                       <div key={i} className="flex items-center justify-between p-3 bg-gray-100 text-black border border-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-700 rounded-xl">
-                        <span className="font-medium text-base text-left flex-1">{hindi}</span>
+                        <span className="font-medium text-base text-left flex-1 flex items-center gap-2">
+                          {hindi}
+                          <button
+                            type="button"
+                            tabIndex={0}
+                            aria-label={`Pronounce ${hindi}`}
+                            className="ml-2 p-1 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            onClick={() => playHindiAudio(hindi)}
+                          >
+                            <FiVolume2 className="w-5 h-5 text-gray-700 dark:text-gray-200" />
+                          </button>
+                        </span>
                         <span className="text-gray-500 dark:text-gray-300 text-base text-right flex-1">{english}</span>
                       </div>
                     ))}
