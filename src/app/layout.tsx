@@ -40,7 +40,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} antialiased`}
+        className={`${inter.variable} antialiased overflow-x-hidden`}
       >
         <SessionProviderWrapper>
           {children}

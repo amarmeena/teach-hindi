@@ -6,9 +6,8 @@ import { FiXCircle, FiArrowLeft, FiArrowRight, FiVolume2, FiUser } from "react-i
 import { MdSportsEsports } from "react-icons/md";
 import ThemeToggle from "@/components/ThemeToggle";
 import { Toast } from "@/components/ui/Toast";
-import { WelcomeModal } from "@/components/ui/WelcomeModal";
-import { useSession, signIn, signOut } from "next-auth/react";
 import { SignInBanner } from "@/components/SignInBanner";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 // Define a placeholder PracticeItem type for now
 interface PracticeItem {
@@ -53,6 +52,7 @@ export default function Home() {
   const { data: session } = useSession();
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const profileMenuRef = useRef<HTMLDivElement>(null);
+  const [showSignInModal, setShowSignInModal] = useState(false);
 
   const motivationalMessages = {
     zero: [
@@ -249,13 +249,6 @@ export default function Home() {
     }
   }, []);
 
-  const handleCloseWelcome = () => {
-    setShowWelcome(false);
-    if (typeof window !== 'undefined' && window.localStorage) {
-      window.localStorage.setItem('isFirstVisit', 'true');
-    }
-  };
-
   // Trigger pop animation on first visit or streak start
   useEffect(() => {
     if (showWelcome || streak === 1) {
@@ -279,6 +272,22 @@ export default function Home() {
     }
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [profileMenuOpen]);
+
+  // Show sign-in modal on first load if not signed in
+  useEffect(() => {
+    if (!session || !session.user) {
+      if (typeof window !== 'undefined' && window.localStorage && !window.localStorage.getItem('seenSignInModal')) {
+        setShowSignInModal(true);
+      }
+    }
+  }, [session]);
+
+  const handleCloseSignInModal = () => {
+    setShowSignInModal(false);
+    if (typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.setItem('seenSignInModal', 'true');
+    }
+  };
 
   if (lessons.length === 0 || courseContent.length === 0) {
     return (
@@ -309,45 +318,58 @@ export default function Home() {
           <div className="flex items-center gap-4">
             <ThemeToggle className="w-11 h-11" />
             {/* Profile Icon & Dropdown */}
-            {session && session.user && (
-              <div className="relative" ref={profileMenuRef}>
-                <button
-                  className="w-11 h-11 rounded-full flex items-center justify-center border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  onClick={() => setProfileMenuOpen((v) => !v)}
-                  aria-label="Open profile menu"
-                >
-                  {session.user.image ? (
-                    <img src={session.user.image} alt="Profile" className="w-9 h-9 rounded-full object-cover" />
-                  ) : session.user.name ? (
-                    <span className="font-bold text-lg">{session.user.name.split(' ').map(n => n[0]).join('').slice(0,2)}</span>
-                  ) : (
-                    <FiUser className="w-7 h-7" />
-                  )}
-                </button>
-                {profileMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg z-50 animate-fade-in">
-                    <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-800">
-                      <div className="font-semibold text-gray-900 dark:text-white">{session.user.name || session.user.email}</div>
-                      {session.user.email && <div className="text-sm text-gray-500 dark:text-gray-300">{session.user.email}</div>}
-                    </div>
-                    <button
-                      className="w-full text-left px-4 py-3 text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-b-xl font-semibold"
-                      onClick={() => { setProfileMenuOpen(false); signOut(); }}
-                    >
-                      Sign out
-                    </button>
-                  </div>
+            <div className="relative" ref={profileMenuRef}>
+              <button
+                className="w-11 h-11 rounded-full flex items-center justify-center border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                onClick={() => setProfileMenuOpen((v) => !v)}
+                aria-label="Open profile menu"
+              >
+                {session && session.user && session.user.image ? (
+                  <img src={session.user.image} alt="Profile" className="w-9 h-9 rounded-full object-cover" />
+                ) : session && session.user && session.user.name ? (
+                  <span className="font-bold text-lg">{session.user.name.split(' ').map(n => n[0]).join('').slice(0,2)}</span>
+                ) : (
+                  <span className="w-9 h-9 flex items-center justify-center rounded-full bg-blue-100 text-blue-600 border-2 border-blue-300 shadow font-bold text-xl transition-transform hover:scale-105">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="w-6 h-6" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="10" r="4" fill="#60A5FA"/>
+                      <path d="M6 18c0-2.21 3.134-4 6-4s6 1.79 6 4" fill="#60A5FA"/>
+                    </svg>
+                  </span>
                 )}
-              </div>
-            )}
+              </button>
+              {profileMenuOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg z-50 animate-fade-in">
+                  {session && session.user ? (
+                    <>
+                      <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-800">
+                        <div className="font-semibold text-gray-900 dark:text-white">{session.user.name || session.user.email}</div>
+                        {session.user.email && <div className="text-sm text-gray-500 dark:text-gray-300">{session.user.email}</div>}
+                      </div>
+                      <button
+                        className="w-full text-left px-4 py-3 text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-b-xl font-semibold"
+                        onClick={() => { setProfileMenuOpen(false); signOut(); }}
+                      >
+                        Sign out
+                      </button>
+                    </>
+                  ) : (
+                    <div className="px-4 py-3 text-sm text-gray-700 dark:text-gray-200 text-center">
+                      <span className="block font-semibold mb-1">Don't lose your streak!</span>
+                      <span className="block mb-2">Sign in to save progress and sync across devices.</span>
+                      <Button onClick={() => { setProfileMenuOpen(false); signIn('google'); }} variant="secondary" size="sm" className="w-full">Sign in with Google</Button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </header>
-      <div className="min-h-screen flex bg-white dark:bg-black font-sans">
+      <div className="min-h-screen flex flex-col md:flex-row bg-white dark:bg-black font-sans overflow-x-hidden">
         {/* Collapsible Sidebar Overlay (all screens) */}
         {sidebarOpen && (
           <aside className="fixed inset-0 z-30 flex sidebar-overlay transition-all duration-300">
-            <div className="sidebar-panel w-64 bg-white dark:bg-black text-gray-900 dark:text-white p-6 h-full flex flex-col transition-all duration-300 translate-x-0">
+            <div className="sidebar-panel w-11/12 max-w-xs md:w-64 bg-white dark:bg-black text-gray-900 dark:text-white p-6 h-full flex flex-col transition-all duration-300 translate-x-0">
               <div className="flex items-center mb-6 justify-between">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Course Progress</h2>
                 <button
@@ -401,9 +423,36 @@ export default function Home() {
             <div className="mb-6 flex items-center gap-4">
               {/* Removed user status from here for focus */}
             </div>
-            <SignInBanner onSignIn={() => signIn("google")}
-                          user={session?.user} />
-            <WelcomeModal open={showWelcome} onClose={handleCloseWelcome} />
+            {showSignInModal && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 font-sans antialiased">
+                <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-6 max-w-md w-full flex flex-col items-center text-center border border-blue-200 dark:border-blue-700">
+                  {/* Clean SVG lock icon */}
+                  <svg className="w-12 h-12 mb-3 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <rect x="5" y="11" width="14" height="8" rx="3" fill="currentColor" className="text-blue-100 dark:text-blue-900"/>
+                    <path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <h2 className="text-xl font-bold mb-2 text-blue-900 dark:text-blue-100">Don't lose your streak!</h2>
+                  <p className="mb-6 text-gray-700 dark:text-gray-200 text-base">
+                    Sign in to <span className="font-semibold text-blue-700 dark:text-blue-300">save progress</span> and <span className="font-semibold text-blue-700 dark:text-blue-300">sync across devices</span>.
+                  </p>
+                  <Button
+                    onClick={() => { handleCloseSignInModal(); signIn('google'); }}
+                    variant="secondary"
+                    size="lg"
+                    className="mb-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow transition-colors px-6 py-2"
+                  >
+                    <svg width="20" height="20" viewBox="0 0 48 48" className="inline-block mr-2 align-middle"><g><path fill="#4285F4" d="M24 9.5c3.54 0 6.7 1.22 9.2 3.22l6.86-6.86C36.68 2.7 30.7 0 24 0 14.82 0 6.73 5.4 2.69 13.32l7.98 6.2C12.2 13.1 17.62 9.5 24 9.5z"/><path fill="#34A853" d="M46.1 24.55c0-1.64-.15-3.22-.42-4.74H24v9.02h12.42c-.54 2.9-2.18 5.36-4.66 7.02l7.2 5.6C43.98 37.1 46.1 31.3 46.1 24.55z"/><path fill="#FBBC05" d="M10.67 28.08a14.5 14.5 0 0 1 0-8.16l-7.98-6.2A23.97 23.97 0 0 0 0 24c0 3.82.92 7.44 2.69 10.68l7.98-6.2z"/><path fill="#EA4335" d="M24 48c6.48 0 11.92-2.14 15.89-5.82l-7.2-5.6c-2.01 1.36-4.6 2.18-8.69 2.18-6.38 0-11.8-3.6-13.33-8.58l-7.98 6.2C6.73 42.6 14.82 48 24 48z"/></g></svg>
+                    Sign in with Google
+                  </Button>
+                  <button
+                    onClick={handleCloseSignInModal}
+                    className="mt-2 px-6 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-blue-900 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-blue-200 font-semibold shadow focus:outline-none focus:ring-2 focus:ring-blue-400 transition-colors"
+                  >
+                    Maybe later
+                  </button>
+                </div>
+              </div>
+            )}
             {toast && (
               <Toast
                 message={toast.message}
@@ -414,7 +463,7 @@ export default function Home() {
             {/* Streak Indicator */}
             <div
               ref={streakRef}
-              className={`flex flex-col items-center justify-center mb-6 p-3 rounded-xl font-bold text-lg shadow-sm border transition-all duration-300 ${getStreakColor()} ${animateStreak ? 'animate-bounce' : ''} ${streakAnimation} ${streakLandingAnim}`}
+              className={`flex flex-col items-center justify-center mb-2 p-3 rounded-xl font-bold text-lg shadow-sm border transition-all duration-300 ${getStreakColor()} ${animateStreak ? 'animate-bounce' : ''} ${streakAnimation} ${streakLandingAnim}`}
               aria-label={`Current streak: ${streak} days`}
               tabIndex={0}
             >
@@ -439,7 +488,6 @@ export default function Home() {
               </div>
               {/* Content Section */}
               <div className="mb-6">
-                <h3 className="text-lg font-bold mb-4 text-black dark:text-white">Vocabulary</h3>
                 {practiceMode ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {courseContent[currentStep].content.map(([hindi, english]: [string, string], i: number) => (
@@ -458,7 +506,7 @@ export default function Home() {
                             type="button"
                             tabIndex={0}
                             aria-label={`Pronounce ${flipped[i] ? english : hindi}`}
-                            className="ml-2 p-1 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            className="p-1 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 self-start mt-1"
                             onClick={e => { e.stopPropagation(); playHindiAudio(flipped[i] ? english : hindi); }}
                           >
                             <FiVolume2 className="w-5 h-5 text-gray-700 dark:text-gray-200" />
@@ -477,7 +525,7 @@ export default function Home() {
                             type="button"
                             tabIndex={0}
                             aria-label={`Pronounce ${hindi}`}
-                            className="ml-2 p-1 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            className="p-1 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 self-start mt-1"
                             onClick={() => playHindiAudio(hindi)}
                           >
                             <FiVolume2 className="w-5 h-5 text-gray-700 dark:text-gray-200" />
