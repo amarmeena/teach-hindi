@@ -31,7 +31,7 @@
       "content": [
         ["मेरा नाम रवि है", "Mera naam Ravi hai", "My name is Ravi"],
         ["आपका नाम क्या है?", "Aapka naam kya hai?", "What is your name?"],
-        ["मैं छात्र हूँ", "Main student hoon", "I am a student"],
+        ["मैं छात्र हूँ", "Main chaatra hoon", "I am a student"],
         ["आप कहाँ से हैं?", "Aap kahan se hain?", "Where are you from?"],
         ["मैं दिल्ली से हूँ", "Main Dilli se hoon", "I am from Delhi"]
       ]
@@ -50,7 +50,7 @@
       "content": [
         ["आप क्या कर रहे हैं?", "Aap kya kar rahe hain?", "What are you doing?"],
         ["सब ठीक है", "Sab theek hai", "Everything is fine"],
-        ["थोड़ा व्यस्त हूँ", "Thoda busy hoon", "I am a bit busy"],
+        ["थोड़ा व्यस्त हूँ", "Thoda vyast hoon", "I am a bit busy"],
         ["फिर मिलेंगे", "Phir milenge", "See you again"],
         ["कोई बात नहीं", "Koi baat nahi", "No problem"]
       ]
