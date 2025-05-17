@@ -1,4 +1,5 @@
 "use client";
+import * as React from "react";
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { FiXCircle, FiArrowLeft, FiArrowRight, FiVolume2 } from "react-icons/fi";
@@ -8,11 +9,6 @@ import { Toast } from "@/components/ui/Toast";
 import { WelcomeModal } from "@/components/ui/WelcomeModal";
 
 // Define types for course content
-interface PracticeItem {
-  prompt: string;
-  question: string;
-  answer: string;
-}
 interface LessonContent {
   vocabulary: [string, string][];
   practice: PracticeItem[];
@@ -31,10 +27,6 @@ export default function Home() {
   const [courseContent, setCourseContent] = useState<LessonContent[]>([]);
   const [currentStep, setCurrentStep] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  // Track which answers are shown for the current lesson
-  const [shownAnswers, setShownAnswers] = useState<{ [key: number]: boolean }>({});
-  // Practice mode state
-  const [practiceMode, setPracticeMode] = useState(false);
   // Track which flashcards are flipped
   const [flipped, setFlipped] = useState<{ [key: number]: boolean }>({});
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -123,28 +115,26 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchCourseData() {
-      const data = await import("../content/hindi-course.json");
+      const data = await import("../content/course.json");
       setLessons(data.default.lessons);
-      // Transform vocabulary to [string, string][]
+      // Transform content to [string, string][]
       const fixedContent = data.default.courseContent.map((lesson: any) => ({
         ...lesson,
-        vocabulary: lesson.vocabulary.map((entry: any) => [entry[0] ?? "", entry[1] ?? ""] as [string, string]),
+        content: lesson.content.map((entry: any) => [entry[0] ?? "", entry[1] ?? ""] as [string, string]),
       }));
       setCourseContent(fixedContent);
     }
     fetchCourseData();
   }, []);
 
-  // Reset shown answers and flipped cards when lesson or mode changes
+  // Reset flipped cards when lesson changes
   useEffect(() => {
-    setShownAnswers({});
     setFlipped({});
-  }, [currentStep, practiceMode]);
+  }, [currentStep]);
 
   // Reset shown answers when lesson changes
   const handleLessonChange = (idx: number) => {
     setCurrentStep(idx);
-    setShownAnswers({});
   };
 
   // Helper to go to next/previous lesson with transition
@@ -183,19 +173,6 @@ export default function Home() {
         setIsTransitioning(false);
       }, 200);
     }
-  };
-  // Toggle quiz mode with transition
-  const togglePracticeMode = () => {
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setPracticeMode((v) => !v);
-      setIsTransitioning(false);
-    }, 200);
-  };
-
-  // Toggle answer visibility for a practice question
-  const toggleAnswer = (i: number) => {
-    setShownAnswers((prev) => ({ ...prev, [i]: !prev[i] }));
   };
 
   // Bounce animation trigger on streak or highestStreak change
@@ -393,7 +370,7 @@ export default function Home() {
               <div className="flex items-center mb-4">
                 <h2 className="text-2xl font-bold text-black dark:text-white mb-0 flex-1">{lessons[currentStep]}</h2>
               </div>
-              {/* Vocabulary Section */}
+              {/* Content Section */}
               <div className="mb-6">
                 <h3 className="text-lg font-bold mb-4 text-black dark:text-white">Vocabulary</h3>
                 {practiceMode ? (
@@ -446,40 +423,26 @@ export default function Home() {
                 )}
               </div>
             </div>
+
             {/* Navigation */}
-            <div className="flex justify-between items-center gap-x-2 mt-6">
-              {/* Previous Lesson Button */}
+            <div className="flex justify-between items-center gap-4">
               <Button
-                variant="secondary"
                 onClick={goToPrev}
                 disabled={currentStep === 0}
                 className="rounded-full flex items-center justify-center min-w-[44px] md:w-44"
               >
                 <span className="md:hidden"><FiArrowLeft className="w-5 h-5" /></span>
-                <span className="hidden md:inline-flex items-center gap-x-2"><FiArrowLeft className="w-5 h-5" />Previous</span>
+                <span className="hidden md:inline-flex items-center gap-x-2">Previous<FiArrowLeft className="w-5 h-5" /></span>
               </Button>
-              {/* Quiz Mode Button */}
-              {practiceMode ? (
-                <Button
-                  variant="secondary"
-                  onClick={togglePracticeMode}
-                  aria-label="Exit Practice Mode"
-                  className="rounded-full flex items-center justify-center min-w-[44px] md:w-44"
-                >
-                  <span className="md:hidden"><FiXCircle className="w-5 h-5" /></span>
-                  <span className="hidden md:inline-flex items-center gap-x-2"><FiXCircle className="w-5 h-5" />Exit Quiz</span>
-                </Button>
-              ) : (
-                <Button
-                  onClick={togglePracticeMode}
-                  aria-label="Enter Practice Mode"
-                  className="rounded-full flex items-center justify-center min-w-[44px] md:w-44"
-                >
-                  <span className="md:hidden"><MdSportsEsports className="w-5 h-5" /></span>
-                  <span className="hidden md:inline-flex items-center gap-x-2"><MdSportsEsports className="w-5 h-5" />Quiz Mode</span>
-                </Button>
-              )}
-              {/* Next Lesson Button */}
+
+              <Button
+                onClick={() => setSidebarOpen(true)}
+                className="rounded-full flex items-center justify-center min-w-[44px] md:w-44"
+              >
+                <span className="md:hidden"><MdSportsEsports className="w-5 h-5" /></span>
+                <span className="hidden md:inline-flex items-center gap-x-2">Lessons<MdSportsEsports className="w-5 h-5" /></span>
+              </Button>
+
               <Button
                 onClick={goToNext}
                 disabled={currentStep === lessons.length - 1}
